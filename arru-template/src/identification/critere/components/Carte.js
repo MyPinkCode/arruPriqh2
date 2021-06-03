@@ -1,7 +1,7 @@
 import React from 'react';
 import "react-svg-map/lib/index.css";
 import Tunisia from '@svg-maps/tunisia';
-import { useStoreDispatch } from '../../context/store';
+import { useStoreDispatch } from '../../../context/store';
 import { SVGMap } from "react-svg-map";
 
 export default function Carte() {

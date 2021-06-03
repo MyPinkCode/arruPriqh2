@@ -3,8 +3,8 @@ import React from 'react';
 const StoreStateContext = React.createContext();
 const StoreDispatchContext = React.createContext();
 
-let zone = null;
 let projet = null;
+let newProjet = null;
 let commune = null;
 let gouvernorat = localStorage.getItem('gouvernoratPriqh2');
 
@@ -48,10 +48,10 @@ const loadValues = () => {
 
 const storeReducer = (state, action) => {
     switch(action.type) {
-        case 'zoneEdit' :
+        case 'newProjet' :
             return {
                 ...state,
-                zone: action.payload,
+                newProjet: action.payload,
             }
         case 'projetEdit' :
             return {
@@ -76,7 +76,7 @@ const storeReducer = (state, action) => {
 }
 
 export const StoreProvider = ({ children }) => {
-    const [state, dispatch] = React.useReducer(storeReducer, { zone, projet, commune, gouvernorat });
+    const [state, dispatch] = React.useReducer(storeReducer, { projet, commune, gouvernorat, newProjet });
 
     return (
         <StoreDispatchContext.Provider value={dispatch}>

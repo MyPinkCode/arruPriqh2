@@ -16,7 +16,7 @@ export default function Specification() {
 
 	const fetchSpecifications = async (e) => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/specifications/';
+			const url ='http://localhost:4000/api/v1/specifications/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -38,7 +38,7 @@ export default function Specification() {
 		var del=confirm("Are you sure you want to delete this specification "+specification.titre+"?");
 		if (del){
 		   try{
-			   const url =`https://priqh2.herokuapp.com/api/v1/specifications/${specification.id}`;
+			   const url =`http://localhost:4000/api/v1/specifications/${specification.id}`;
 			   const res = await axios({
 				   headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 					 method: 'delete',
@@ -63,7 +63,7 @@ export default function Specification() {
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Gestion des specifications </strong></h3>
+				<h1 className="h3 mb-3">Gestion des specifications</h1>
                 </div>
 
             </div>

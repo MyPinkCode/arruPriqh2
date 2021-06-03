@@ -33,7 +33,7 @@ export default function PrintProjet() {
 
       const test_eligible = async() => {
         try{
-          const url = `https://priqh2.herokuapp.com/api/v1/criteres/test_eligible`;
+          const url = `http://localhost:4000/api/v1/criteres/test_eligible`;
           const res = await axios({
             headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
               method: 'put',
@@ -87,7 +87,7 @@ export default function PrintProjet() {
         
           {
             loading ?
-            <div class="d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
             <Col md="auto" >
             <Spinner
 							as="span"

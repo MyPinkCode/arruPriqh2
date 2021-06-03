@@ -10,26 +10,19 @@ export default function Role() {
 	const [roles, setRoles] = React.useState([]);
 	const [roleEdit, setRoleEdit] = React.useState({});
 
-	React.useEffect(() => {
-		fetchRoles();
-	},[]);
 	  
 	const fetchRoles = async (e) => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/roles/';
+			const url ='http://localhost:4000/api/v1/roles/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
 			  	url,
 			});
 	
-		
-			if (res.status === 200) {
-			  
-				setRoles(res.data.roles);
-			  	console.log(res);
-
-			}
+			setRoles(res.data.roles);
+			console.log(res);
+			
 			} catch (err) {
 				console.log(err);
 				console.log("Alert");
@@ -41,7 +34,7 @@ export default function Role() {
 		 var del=confirm("Are you sure you want to delete this role "+role.titre+" ?");
 		 if (del){
 			try{
-				const url =`https://priqh2.herokuapp.com/api/v1/roles/${role.id}`;
+				const url =`http://localhost:4000/api/v1/roles/${role.id}`;
 				const res = await axios({
 					headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 					  method: 'delete',
@@ -62,13 +55,18 @@ export default function Role() {
 	}
 
 
+	React.useEffect(() => {
+		fetchRoles();
+	},[]);
+
+
     return (
         <main className="content">
         <div className="container-fluid p-0">
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Gestion des roles </strong></h3>
+				<h1 className="h3 mb-3">Gestion des roles</h1>
                 </div>
 
             </div>

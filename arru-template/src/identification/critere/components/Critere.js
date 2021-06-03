@@ -1,6 +1,5 @@
 import React from 'react'
 import FeatherIcon from 'feather-icons-react'
-import Form from '../components/FormProjet'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,7 +19,7 @@ export default function Critere({title,critere,id}){
 		if(title === "Surface urbanisée totale (hectares)"){ data = { surface_urbanisée_totale: critereEdit } }
 
 		try{
-			const url = `https://priqh2.herokuapp.com/api/v1/criteres/${id}`;
+			const url = `http://localhost:4000/api/v1/criteres/${id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',

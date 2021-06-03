@@ -13,16 +13,16 @@ function handleChange(event) {
 
 	const [show, setShow] = React.useState(false);
     return (
-            	<div class="col-12 col-md-6 col-lg-3">
-							<div class="card">
+            	<div className="col-12 col-md-6 col-lg-3">
+							<div className="card">
 
-								<img class="card-img-top" src={img} alt="image" style={{"height": "150px"}}/>
+								<img className="card-img-top" src={img} alt="image" style={{"height": "150px"}}/>
 
-								<div class="card-header px-4 pt-4">
-									<h3 class=" mb-0">{name}</h3>
+								<div className="card-header px-4 pt-4">
+									<h3 className=" mb-0">{name}</h3>
 								
 								</div>
-								<div class="card-body px-4 pt-2">
+								<div className="card-body px-4 pt-2">
 								<div className="d-flex flex-row-reverse">
 				<div>
 				<span  className="btn btn-danger ml-1" ><FeatherIcon icon="trash-2" /></span>

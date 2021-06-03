@@ -20,11 +20,11 @@ export default function Sidebar(props) {
                 </span>
 
 				<ul className="sidebar-nav">
-					{ 0 > 1 ?
-					<>
+					
+					{ user.payload.interfaces.filter((el) => ["gestion des utilisateurs", "gestion des roles", "gestion des groupes", "gestion des fonctionalites"].indexOf(el.titre) > -1).length > 0 ? 
 					<li className="sidebar-header">
 						Droits d'accès
-					</li>
+					</li> : ""}
 
 					{ user.payload.interfaces.filter((el) => el.titre === "gestion des utilisateurs").length > 0 ?  
 					<SidebarItem title="Utilisateurs" icon="users" l="/Utilisateurs" selecteditem={selectedItem} setselecteditem={setSelectedItem}/>
@@ -40,19 +40,28 @@ export default function Sidebar(props) {
 
 					{ user.payload.interfaces.filter((el) => el.titre === "gestion des fonctionalites").length > 0 ?
 					<SidebarItem title="Interfaces" icon="layout" l="/Interfaces" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					: "" } </>: "" }
+					: "" } 
+					
 						
 					
-
+					{ user.payload.interfaces.filter((el) => ["gestion des utilisateurs", "gestion des roles", "gestion des groupes", "gestion des fonctionalites"].indexOf(el.titre) > -1).length > 0 ? 
 					<li className="sidebar-header">
 						Identification des projets
-					</li>
+					</li> : ""}
+
+					{ user.payload.interfaces.filter((el) => el.titre === "gestion des projets").length > 0 ? 
 					<SidebarItem title="Projets" icon="clipboard" l="/Projets" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					: "" }
+					{ user.payload.interfaces.filter((el) => el.titre === "gestion des quartiers").length > 0 ? 
 					<SidebarItem title="Quartiers" icon="map-pin" l="/Quartiers" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					: "" }
+					{ user.payload.interfaces.filter((el) => el.titre === "gestion des criteres").length > 0 ? 
 					<SidebarItem title="Critéres d'éligibilité" icon="filter" l="/Critéres d'éligibilité" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Zone d'intervention" icon="map" l="/zoneInterventions" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					: "" }
+					{ user.payload.interfaces.filter((el) => el.titre === "gestion des communes").length > 0 ? 
 					<SidebarItem title="Communes" icon="list" l="/communes" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					
+					: "" }
+
 					<li className="sidebar-header">
 						Financement
 					</li>

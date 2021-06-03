@@ -33,7 +33,7 @@ export default function Dashboard() {
 	  
 	const fetchUsers = async (e) => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/';
+			const url ='http://localhost:4000/api/v1/utilisateurs/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -55,7 +55,7 @@ export default function Dashboard() {
 
 	const updateUser = async (id) => {
 		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/utilisateurs/${id}`;
+			const url =`http://localhost:4000/api/v1/utilisateurs/${id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
@@ -76,7 +76,7 @@ export default function Dashboard() {
 		var del=confirm("Are you sure you want to delete this user "+user.nom+" "+user.prenom+"?");
 		if (del){
 		   try{
-			   const url =`https://priqh2.herokuapp.com/api/v1/utilisateurs/${user.id}`;
+			   const url =`http://localhost:4000/api/v1/utilisateurs/${user.id}`;
 			   const res = await axios({
 				   headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 					 method: 'delete',
@@ -101,7 +101,7 @@ export default function Dashboard() {
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Gestion des utilisateurs </strong></h3>
+				<h1 className="h3 mb-3">Gestion des utilisateurs </h1>
                 </div>
 
             </div>

@@ -1,11 +1,11 @@
 import React from 'react'
-import Map from '../components/Map'
+import Map from './components/Map'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import axios from 'axios'
 
 import FeatherIcon from 'feather-icons-react';
-import MapFormAdd from '../components/MapFormAdd'
+import MapFormAdd from './components/MapFormAdd'
 
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import LoadingBar from 'react-top-loading-bar';
@@ -22,57 +22,58 @@ export default function Quartiers() {
     const [progress, setProgress] = React.useState(0);
     const [loading, setLoading] = React.useState(true);
 
-    const fetchGouvernorats = async() => {
-		try{
-			const url ='https://priqh2.herokuapp.com/api/v1/gouvernorats/';
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'get',
-			  	url
-			});
-
-			let options = [];
-			for(const gov of res.data.gouvernorats){
-				options.push({
-					label: gov.nom_fr+' - '+gov.nom_ar, value: gov.id
-				});
-			}
-
-			setGouvernorats(options);
-		}catch(err){
-			console.log(err.response.data.message);
+    const handlesChangeGouvernorat = (e) => {
+        setLoading(true);
+        console.log(e);
+        let communes_options = [];
+        let allQuartiers = [];
+		for(const commune of e.value.communes){
+			let obj = { value: commune, label: commune.nom_fr+" - "+ commune.nom_ar }
+			communes_options.push(obj);
+            allQuartiers.push(...commune.quartiers)
 		}
+        console.log(allQuartiers);
+        setCommunes(communes_options);
+        setGouvernorat(e.value);
+        setQuartiers(allQuartiers);
+        setLoading(false);
+    }
+
+    const handlesChangeCommune = (e) => {
+        setLoading(true);
+		setCommune(e.value);
+        setQuartiers(e.value.quartiers);
+        setLoading(false);
 	}
 
-    const fetchQuartiers = async () => {
+    const fetchGouvernorats = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/';
+			const url ='http://localhost:4000/api/v1/gouvernorats/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
 			  	url,
 			});
 	
-			console.log("fetchQuartiers",res.data.quartiers);
+			console.log(res.data.gouvernorats);
 
-		
-				setQuartiers(res.data.quartiers);
-		
-
-            console.log(quartiers);
-
-            setLoading(false);
+			if (res.status === 200) {
+				let gouvernorats_options = [];
+				for(const gouvernorat of res.data.gouvernorats){
+					let obj = { value: gouvernorat, label: gouvernorat.nom_fr+" - "+ gouvernorat.nom_ar }
+					gouvernorats_options.push(obj);
+				}
+				setGouvernorats(gouvernorats_options);
+			}
 
 			} catch (err) {
 				console.log(err);
 			}
 	}
 
-    const fetchGovQuartiers = async (gov) => {
-        setLoading(true);
-        
+    const fetchQuartiers = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/gouvernorat/'+gov;
+			const url ='http://localhost:4000/api/v1/quartiers/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -94,58 +95,8 @@ export default function Quartiers() {
 			}
 	}
 
-    const fetchComQuartiers = async (com) => {
-        setLoading(true);
-		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/quartiers/commune/'+com.slice(4,8);
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'get',
-			  	url,
-			});
-	
-            console.log(url);
-			console.log("fetchQuartiers",res.data.quartiers);
+    
 
-		
-				setQuartiers(res.data.quartiers);
-		
-
-            console.log(quartiers);
-
-            setLoading(false);
-
-			} catch (err) {
-				console.log(err);
-			}
-	}
-
-    const fetchCommunes = async(gov) => {
-		console.log(gouvernorat);
-		try{
-			const url = `https://priqh2.herokuapp.com/api/v1/gouvernorats/${gov}/communes/`;
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  	method: 'get',
-			  	url,
-			});
-
-			console.log(url);
-			console.log("fetchCommunes",res.data.communes);
-
-			let optionsCommunes = [];
-			for(const com of res.data.communes){
-				optionsCommunes.push({
-					label: com.nom_fr+' - '+com.nom_ar, value: com.id
-				});
-			}
-
-			setCommunes(optionsCommunes);
-			
-		}catch(err){
-			console.log(err.response.data.message);
-		}
-	}
 
     React.useEffect(() => {
         setProgress(20);
@@ -190,12 +141,14 @@ export default function Quartiers() {
                                     
                                     <div className="col-sm-12">
                                         <div className="boxes" >
-                                            <Select
-                                                placeholder="Gouvernorat"
-                                                components={animatedComponents}
-                                                options={gouvernorats}
-                                                onChange={(e) => { setCommunes([]); fetchCommunes(e.value); fetchGovQuartiers(e.value); setGouvernorat(true);}}
-                                            />							
+                                        <Select className="py-2"
+                                            placeholder="Select Gouvernorat ..."
+                                            closeMenuOnSelect={false}
+                                            components={animatedComponents}
+                                            options={gouvernorats}
+                                            onChange={handlesChangeGouvernorat}
+                                            defaultValue={gouvernorats[0]}
+                                        />							
                                         </div>
                                     </div>
                                 </div>
@@ -205,12 +158,14 @@ export default function Quartiers() {
                                     
                                     <div className="col-sm-12">
                                         <div className="boxes" >
-                                            <Select
-                                                placeholder="Commune"
-                                                components={animatedComponents}
-                                                options={communes}
-                                                onChange={(e) => { setCommune(e.value); fetchComQuartiers(e.value);}}
-                                            />							
+                                        <Select className="py-2"
+                                            placeholder="Select Commune ..."
+                                            closeMenuOnSelect={false}
+                                            components={animatedComponents}
+                                            options={communes}
+                                            
+                                            onChange={handlesChangeCommune}
+                                        />					
                                         </div>
                                     </div>
                                 </div> : ''
@@ -258,7 +213,7 @@ export default function Quartiers() {
         dialogClassName="modal-100w"
         aria-labelledby="example-custom-modal-styling-title"
         >
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Modal.Title id="example-custom-modal-styling-title">
             Ajouter Quartier
           </Modal.Title>

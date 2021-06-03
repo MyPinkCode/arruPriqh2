@@ -11,12 +11,12 @@ import Specification from './droit-acce/pages/Specification'
 import Settings from './droit-acce/pages/Settings'
 import Profile from './droit-acce/pages/Profile'
 import Login from './droit-acce/pages/Login'
-import Quartiers from './identification/pages/Quartiers'
-import Projets from './identification/pages/Projets'
+import Quartiers from './identification/quartier/Quartiers'
+import Projets from './identification/projet/Projets'
 import E404 from './identification/pages/E404'
-import Criteres from './identification/pages/Criteres'
-import Zone from './identification/pages/Zone'
-import Commune from './identification/pages/Communes'
+import Criteres from './identification/critere/Criteres'
+
+import Commune from './identification/commune/Communes'
 import Elig from './identification/pages/Eligible'
 import Beilleurs from './identification/pages/Beilleurs'
 import Tranches from './identification/pages/Tranches'
@@ -51,16 +51,15 @@ function App() {
             <DynamicRoutes exact path="/Specifications" component={Specification} authenticated interface="gestion des groupes" /> 
             <DynamicRoutes exact path="/Profile" component={Profile} authenticated />
             <DynamicRoutes exact path="/Settings" component={Settings} authenticated />
-            <DynamicRoutes exact path="/Quartiers" component={Quartiers} guest />
-            <DynamicRoutes exact path="/Projets" component={Projets} guest />
-            <DynamicRoutes exact path="/Eligible" component={Elig} guest />
-            <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} guest />
-            <DynamicRoutes exact path="/zoneInterventions" component={Zone} guest />
-            <DynamicRoutes exact path="/communes" component={Commune} guest />
-            <DynamicRoutes exact path="/beilleurs" component={Beilleurs} guest />
-            <DynamicRoutes exact path="/Tranches" component={Tranches} guest />
-            <DynamicRoutes exact path="/Budget" component={Budget} guest />
-            <DynamicRoutes component={E404} guest />
+            <DynamicRoutes exact path="/Quartiers" component={Quartiers} authenticated />
+            <DynamicRoutes exact path="/Projets" component={Projets} authenticated />
+            <DynamicRoutes exact path="/Eligible" component={Elig} authenticated />
+            <DynamicRoutes exact path="/Critéres d'éligibilité" component={Criteres} authenticated />
+            <DynamicRoutes exact path="/communes" component={Commune} authenticated />
+            <DynamicRoutes exact path="/beilleurs" component={Beilleurs} authenticated />
+            <DynamicRoutes exact path="/Tranches" component={Tranches} authenticated />
+            <DynamicRoutes exact path="/Budget" component={Budget} authenticated />
+            <DynamicRoutes component={E404} authenticated />
           </Switch>
           <Footer />
           </div>

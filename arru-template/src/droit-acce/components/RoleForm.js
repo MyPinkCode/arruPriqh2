@@ -22,7 +22,7 @@ export default function RoleForm({ role }) {
 		if(selectedInterfaces.length === 0) return console.log('interface obligatoire !!');
 		const data = { titre, relations:{fonctionalites: selectedFonctionalites, interfaces: selectedInterfaces} }
 		try{
-			const url ='https://priqh2.herokuapp.com/api/v1/roles/';
+			const url ='http://localhost:4000/api/v1/roles/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
@@ -43,7 +43,7 @@ export default function RoleForm({ role }) {
 		const data = { titre, relations:{fonctionalites: selectedFonctionalites, interfaces: selectedInterfaces} }
 		console.log(data);
 		try{
-			const url = `https://priqh2.herokuapp.com/api/v1/roles/${role.id}`;
+			const url = `http://localhost:4000/api/v1/roles/${role.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
@@ -62,7 +62,7 @@ export default function RoleForm({ role }) {
 
 	const fetchFonctionalites = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/fonctionalites/';
+			const url ='http://localhost:4000/api/v1/fonctionalites/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -87,7 +87,7 @@ export default function RoleForm({ role }) {
 
 	const fetchInterfaces = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/interfaces/';
+			const url ='http://localhost:4000/api/v1/interfaces/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',

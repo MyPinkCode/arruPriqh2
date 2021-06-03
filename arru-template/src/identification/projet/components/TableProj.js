@@ -6,7 +6,7 @@ import FeatherIcon from 'feather-icons-react';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useStoreDispatch } from '../../context/store';
+import { useStoreDispatch } from '../../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 
 const TableProj = React.forwardRef((props, ref) => {
@@ -17,9 +17,9 @@ const TableProj = React.forwardRef((props, ref) => {
   const [show, setShow] = React.useState(false);
   const dispatch = useStoreDispatch();
 
-  const deleteZone = async () => {
+  const deleteProjet = async () => {
 		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
+			const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -32,7 +32,7 @@ const TableProj = React.forwardRef((props, ref) => {
 					autoClose: 5000,
 					draggable: false
 				});
-				window.location.replace('/zoneInterventions');
+				window.location.replace('/Projets');
 			}
 
 			} catch (err) {
@@ -48,7 +48,7 @@ const TableProj = React.forwardRef((props, ref) => {
   const fetchProjets = async () => {
   
     try {
-			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
+			const url ='http://localhost:4000/api/v1/projets/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  method: 'get',
@@ -61,9 +61,7 @@ const TableProj = React.forwardRef((props, ref) => {
         let projets = [];
         for(const projet of res.data.projets){
           projets.push({
-              gouvernorat: projet.gouvernorat.nom,
-              commune: projet.commune.nom,
-              nom: projet.zone.nom_fr,
+              nom: "",
               quartier:
               <ul className="ml-n4" key={projet.id} style={{"listStyleType":"none"}}>
                 {
@@ -72,23 +70,23 @@ const TableProj = React.forwardRef((props, ref) => {
                   ))
                 }
               </ul>,
-              Nombre: projet.zone.nbr_quartier,
-              Surfaces: projet.zone.surface_totale,
-              Surface: projet.zone.surface_urbanisée_totale,
-              logement: projet.zone.nombre_logements_totale,
-              habitant: projet.zone.nombre_habitants_totale,
-              qd: projet.infrastructures.filter((infra)=> infra.type === "Drainage")[0].quantité,
-              cd: projet.infrastructures.filter((infra)=> infra.type === "Drainage")[0].cout,
-              qv: projet.infrastructures.filter((infra)=> infra.type === "Voirie")[0].quantité,
-              cv: projet.infrastructures.filter((infra)=> infra.type === "Voirie")[0].cout,
-              qep: projet.infrastructures.filter((infra)=> infra.type === "Eau potable")[0].quantité,
-              cep: projet.infrastructures.filter((infra)=> infra.type === "Eau potable")[0].cout,
-              npl: projet.infrastructures.filter((infra)=> infra.type === "Eclairage public")[0].quantité,
-              cpl: projet.infrastructures.filter((infra)=> infra.type === "Eclairage public")[0].cout,
-              qa: projet.infrastructures.filter((infra)=> infra.type === "Assainissement")[0].quantité,
-              ca: projet.infrastructures.filter((infra)=> infra.type === "Assainissement")[0].cout,
-              be: projet.etude && projet.etude.bureau ? projet.etude.bureau : '',
-              ce: projet.etude && projet.etude.cout ? projet.etude.cout : '',
+              Nombre: projet.nbr_quartiers,
+              Surfaces: projet.surface_totale,
+              Surface: projet.surface_urbanisée_totale,
+              logement: projet.nombre_logements_totale,
+              habitant: projet.nombre_habitants_totale,
+              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantité && 0,
+              cd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].cout && 0,
+              qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantité && 0,
+              cv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].cout && 0,
+              qep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].quantité && 0,
+              cep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].cout && 0,
+              npl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].quantité && 0,
+              cpl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].cout && 0,
+              qa: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].quantité && 0,
+              ca: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].cout && 0,
+              be: projet.bureau_etude,
+              ce: projet.cout_etude,
               modifier :<span onClick={() => dispatch({ type:'projetEdit', payload: projet })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
               supprimer : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
           });
@@ -96,18 +94,6 @@ const TableProj = React.forwardRef((props, ref) => {
 
         setDatatable({
           columns: [
-            {
-              label: 'Gouvernorat',
-              field: 'gouvernorat',
-              attributes: {
-                'aria-controls': 'DataTable',
-                'aria-label': 'gouvernorat',
-              },
-            },
-            {
-              label: 'Commune',
-              field: 'commune',
-            },
             {
               label: 'Nom',
               field: 'nom',
@@ -241,12 +227,12 @@ const TableProj = React.forwardRef((props, ref) => {
           <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want delete {projet.id}!</Modal.Body>
+          <Modal.Body>Are you sure you want delete {projet.nom}!</Modal.Body>
           <Modal.Footer>
           <Button variant="primary" onClick={() => setShow(false)}>
             Close
           </Button>
-          <Button variant="danger" onClick={() => { deleteZone() }}>
+          <Button variant="danger" onClick={() => { deleteProjet() }}>
             Delete
           </Button>
           </Modal.Footer>

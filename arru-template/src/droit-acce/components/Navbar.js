@@ -100,7 +100,7 @@ export default function Navbar(props) {
                         </a>
 
                         <a className="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                            { 1 > 0 ? "" : <><img src={user.payload.image === null || user.payload === undefined ? "img/photos/user-01.png" : `https://priqh2.herokuapp.com/img/utilisateurs/${user.payload.image}`} className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">{ user.payload.nom+" "+user.payload.prenom }</span></> }
+                            { 1 > 0 ? "" : <><img src={user.payload.image === null || user.payload === undefined ? "img/photos/user-01.png" : `http://localhost:4000/img/utilisateurs/${user.payload.image}`} className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">{ user.payload.nom+" "+user.payload.prenom }</span></> }
                             <img src="img/photos/user-01.png" className="avatar img-fluid rounded mr-1" alt="user" /> <span className="text-dark">{ user.payload.nom+" "+user.payload.prenom }</span>
                         </a>
 

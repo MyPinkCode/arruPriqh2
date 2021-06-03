@@ -15,7 +15,7 @@ const [rolesDefault, setRolesDefault] = React.useState([]);
 
 	const fetchRoles = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/roles/';
+			const url ='http://localhost:4000/api/v1/roles/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -76,7 +76,7 @@ const [rolesDefault, setRolesDefault] = React.useState([]);
 	const addUser = async() => {
 		console.log({utilisateur, relations});
 		try{
-			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/';
+			const url ='http://localhost:4000/api/v1/utilisateurs/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
@@ -94,7 +94,7 @@ const [rolesDefault, setRolesDefault] = React.useState([]);
 	const updateUser = async() => {
 		console.log({utilisateur, relations});
 		try{
-			const url =`https://priqh2.herokuapp.com/api/v1/utilisateurs/${user.id}`;
+			const url =`http://localhost:4000/api/v1/utilisateurs/${user.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',

@@ -6,7 +6,7 @@ export default function GroupSpecification({ specification }) {
     
     const addSpecification = async () => {
 		try{
-			const url ='https://priqh2.herokuapp.com/api/v1/Specifications/';
+			const url ='http://localhost:4000/api/v1/Specifications/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
@@ -24,7 +24,7 @@ export default function GroupSpecification({ specification }) {
 
 	const updateSpecification = async () => {
 		try{
-			const url = `https://priqh2.herokuapp.com/api/v1/specifications/${specification.id}`;
+			const url = `http://localhost:4000/api/v1/specifications/${specification.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',

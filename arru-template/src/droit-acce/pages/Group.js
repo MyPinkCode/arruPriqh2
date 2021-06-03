@@ -16,7 +16,7 @@ export default function Group() {
 
 	const fetchRoles = async (e) => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/roles/';
+			const url ='http://localhost:4000/api/v1/roles/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -44,7 +44,7 @@ export default function Group() {
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Gestion des groupes </strong></h3>
+				<h1 className="h3 mb-3">Gestion des groupes</h1>
                 </div>
 
             </div>

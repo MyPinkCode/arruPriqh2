@@ -14,7 +14,7 @@ export default function Interface() {
 	  
 	const fetchInterfaces = async (e) => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/fonctionalites/';
+			const url ='http://localhost:4000/api/v1/fonctionalites/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -35,7 +35,7 @@ export default function Interface() {
 
             <div className="row mb-2 mb-xl-3">
                 <div className="col-auto d-none d-sm-block">
-                    <h3><strong>Les Fonctionalites </strong></h3>
+				<h1 className="h3 mb-3">Les Fonctionalites</h1>
                 </div>
 
             </div>

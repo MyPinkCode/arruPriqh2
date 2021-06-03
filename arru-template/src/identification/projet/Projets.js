@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import Carte from '../components/Carte';
-import Form from '../components/FormProjet'
-import FormProjetUpdate from './../components/FormProjetUpdate'
+import Carte from '../critere/components/Carte';
+import Form from './components/FormProjet'
+import FormProjetUpdate from './components/FormProjetUpdate'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-smart-data-table/dist/react-smart-data-table.css'
-import Print from '../components/PrintProjet'
+import Print from './components/PrintProjet'
 import FeatherIcon from 'feather-icons-react';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import LoadingBar from 'react-top-loading-bar';
@@ -19,7 +19,7 @@ export default function Projets() {
 	const [progress, setProgress] = React.useState(0);
 	const fetchProjets = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/projets/';
+			const url ='http://localhost:4000/api/v1/projets/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -31,13 +31,13 @@ export default function Projets() {
 			}
 
 			} catch (err) {
-				console.log(err.response.data.message);
+				console.log(err);
 			}
 	}
 
 	const deleteProjet = async () => {
 		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/projets/${projet.id}`;
+			const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',

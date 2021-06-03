@@ -9,7 +9,6 @@ import { Spinner } from 'react-bootstrap'
 
 const {BaseLayer} = LayersControl;
 
-
 export default function Map({ quartiers, loading, setLoading }) {
 
   console.log(quartiers);
@@ -22,7 +21,7 @@ export default function Map({ quartiers, loading, setLoading }) {
   const deleteQuartier = async (id) => {
     console.log(id);
 		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/quartiers/${id}`;
+			const url =`http://localhost:4000/api/v1/quartiers/${id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -55,7 +54,7 @@ export default function Map({ quartiers, loading, setLoading }) {
     <Container>
       {
         loading ?
-        <div class="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
         <Col md="auto" >
         <Spinner
 					as="span"
@@ -81,13 +80,11 @@ export default function Map({ quartiers, loading, setLoading }) {
           </BaseLayer>
         </LayersControl>
         <ZoomControl position="bottomleft" zoomInText="+" zoomOutText="-" />
-      
     
         {
         quartiers.map((quartier, index) => (
               <Marker position={[quartier.center.lat,quartier.center.lng]} key={index}>
                 <Popup>
-                  Zone d'intervention: {quartier.zone_intervention.nom_fr} <br />
                   Nom: {quartier.nom_fr} <br />
                   <Row className="justify-content-md-center">
                     <Col md="auto">
@@ -108,7 +105,7 @@ export default function Map({ quartiers, loading, setLoading }) {
       { 
       quartiers.map((quartier, index) => ( 
       <Polygon key={index} pathOptions={{ color: 'blue' }} positions={multiPolygon(quartier.latlngs)}>
-        <Tooltip sticky>{quartier.zone_intervention.nom_fr}</Tooltip>
+        <Tooltip sticky>{quartier.nom_fr}</Tooltip>
       </Polygon> ))
       }
       
@@ -136,7 +133,7 @@ export default function Map({ quartiers, loading, setLoading }) {
         dialogClassName="modal-100w"
         aria-labelledby="example-custom-modal-styling-title"
         >
-        <Modal.Header closeButton >
+        <Modal.Header >
           <Modal.Title id="example-custom-modal-styling-title">
             Modifier Quartier
           </Modal.Title>

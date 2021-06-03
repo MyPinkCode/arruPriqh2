@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import Carte from '../components/Carte';
-import Form from '../components/FormProjet'
+import Carte from '../critere/components/Carte';
+import Form from '../projet/components/FormProjet'
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

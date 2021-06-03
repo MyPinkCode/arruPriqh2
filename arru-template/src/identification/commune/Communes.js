@@ -1,7 +1,7 @@
 import React from 'react'
-import FormCommune from './../components/FormCommune'
-import FormCommuneUpdate from './../components/FormCommuneUpdate'
-import Print from './../components/PrintCommune'
+import FormCommune from './components/FormCommune'
+import FormCommuneUpdate from './components/FormCommuneUpdate'
+import Print from './components/PrintCommune'
 import LoadingBar from 'react-top-loading-bar';
 
 export default function Communes() {

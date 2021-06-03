@@ -1,8 +1,8 @@
 import React from 'react'
-import Carte from '../components/Carte'
-import Critere from '../components/Critere'
+import Carte from './components/Carte'
+import Critere from './components/Critere'
 import axios from 'axios'
-import { useStoreState } from '../../context/store';
+import { useStoreState } from './../../context/store';
 import LoadingBar from 'react-top-loading-bar';
 
 export default function Criteres() {
@@ -12,7 +12,7 @@ export default function Criteres() {
     const [progress, setProgress] = React.useState(0);
     const fetchCriteres = async (gouvernorat) => {
 		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/criteres/gouvernorat/${gouvernorat.slice(0,3).toUpperCase()}`;
+			const url =`http://localhost:4000/api/v1/criteres/${gouvernorat.slice(0,3).toUpperCase()}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -20,7 +20,7 @@ export default function Criteres() {
 			});
 
             console.log(res);
-			setFiche(res.data.critere);
+			setFiche(res.data.critere.fiche_criteres);
 
 			} catch (err) {
 				console.log(err.response.data.message);
@@ -51,7 +51,6 @@ export default function Criteres() {
 
                 <div className="col-9">
                     <div className="row">
-                       <Critere title="Nombre de quartiers" id={fiche.id} critere={fiche.nbr_quartier}/>
                        <Critere title="Nombre de logements" id={fiche.id} critere={fiche.nombre_logements_totale}/>
                        <Critere title="Nombre d'habitant" id={fiche.id} critere={fiche.nombre_habitants_totale}/>
                        <Critere title="Surface totale (hectares)" id={fiche.id} critere={fiche.surface_totale}/>

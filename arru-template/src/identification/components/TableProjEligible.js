@@ -20,7 +20,7 @@ const TableProjEligible = React.forwardRef((props, ref) => {
 
   const ineligible = async () => {
     try{
-        const url =`https://priqh2.herokuapp.com/api/v1/criteres/ineligible/${projet.id}`;
+        const url =`http://localhost:4000/api/v1/criteres/ineligible/${projet.id}`;
 		const res = await axios({
 			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			method: 'put',
@@ -48,7 +48,7 @@ const TableProjEligible = React.forwardRef((props, ref) => {
 
     const fetchProjets = async () => {
         try {
-		const url ='https://priqh2.herokuapp.com/api/v1/projets/';
+		const url ='http://localhost:4000/api/v1/projets/';
 		const res = await axios({
 			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			method: 'get',
@@ -216,7 +216,7 @@ const TableProjEligible = React.forwardRef((props, ref) => {
         <ToastContainer />
         {
             loading ?
-            <div class="d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
             <Col md="auto" >
             <Spinner
 							as="span"

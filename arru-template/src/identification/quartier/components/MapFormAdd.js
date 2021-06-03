@@ -2,47 +2,62 @@ import React from 'react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { Container, Card, Button, Modal } from 'react-bootstrap';
-import { MapContainer , TileLayer, FeatureGroup } from "react-leaflet";
+import { MapContainer , Marker, Popup, TileLayer, Polygon, FeatureGroup, LayersControl, ZoomControl} from "react-leaflet";
+import * as turf from '@turf/turf'
 import { EditControl } from "react-leaflet-draw"
 import axios from 'axios'
+
+const {BaseLayer} = LayersControl;
 
 export default function MapFormAdd() {
     const animatedComponents = makeAnimated();
     
     const [show, setShow] = React.useState(false);
-    const [projet, setProjet] = React.useState(null);
+    const [commune, setCommune] = React.useState(null);
     const [nom_fr, setNomFr] = React.useState("");
     const [nom_ar, setNomAr] = React.useState("");
+    const [gouvernorats, setGouvernorats] = React.useState([]);
+    const [gouvernorat, setGouvernorat] = React.useState(null);
+    const [communes, setCommunes] = React.useState([]);
 
-    const handlesChange = (e) => {
-        console.log(e.value)
-		setProjet(e.value);
+    const handlesChangeCommune = (e) => {
+		setCommune(e.value);
 	}
 
-    const [projets, setProjets] = React.useState([]);
+    const handlesChangeGouvernorat = (e) => {
+        console.log(e);
+        let communes_options = [];
+		for(const commune of e.value.communes){
+			let obj = { value: commune, label: commune.nom_fr+" - "+ commune.nom_ar }
+			communes_options.push(obj);
+		}
+        setCommunes(communes_options);
+        setGouvernorat(e.value);
+        console.log(communes_options, gouvernorat);
+    }
+    
 
     const [mapLayers, setMapLayers] = React.useState([]);
 
-    
 
-    const fetchProjets = async () => {
+    const fetchGouvernorats = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/zoneIntervention/';
+			const url ='http://localhost:4000/api/v1/gouvernorats/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
 			  	url,
 			});
 	
-			console.log(res.data.zone_interventions);
+			console.log(res.data.gouvernorats);
 
 			if (res.status === 200) {
-				let projets_options = [];
-				for(const projet of res.data.zone_interventions){
-					let obj = { value: projet.id, label: projet.nom_fr+" - "+ projet.nom_ar }
-					projets_options.push(obj);
+				let gouvernorats_options = [];
+				for(const gouvernorat of res.data.gouvernorats){
+					let obj = { value: gouvernorat, label: gouvernorat.nom_fr+" - "+ gouvernorat.nom_ar }
+					gouvernorats_options.push(obj);
 				}
-				setProjets(projets_options);
+				setGouvernorats(gouvernorats_options);
 			}
 
 			} catch (err) {
@@ -53,7 +68,7 @@ export default function MapFormAdd() {
     const addQuartier = async () => {
         console.log(mapLayers);
 		 try {
-			const url =`https://priqh2.herokuapp.com/api/v1/quartiers/`;
+			const url =`http://localhost:4000/api/v1/quartiers/`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
@@ -72,7 +87,7 @@ export default function MapFormAdd() {
 	}
 
     React.useEffect(() => {
-        fetchProjets()
+        fetchGouvernorats()
     },[]);
 
     const _onCreate = (e) => {
@@ -83,7 +98,7 @@ export default function MapFormAdd() {
         if (layerType === "polygon") {
           const { _leaflet_id } = layer;
 
-          mapLayers.push({ id: _leaflet_id, zone_intervention_id: projet, quartier: {nom_fr: "", nom_ar: ""}, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
+          mapLayers.push({ id: _leaflet_id, commune_id: commune.id, commune_code: commune.code, quartier: {nom_fr: "", nom_ar: "", surface: turf.area(layer.toGeoJSON())}, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
         }
 
         setShow(true);
@@ -100,7 +115,7 @@ export default function MapFormAdd() {
         for(const layer of Object.values(_layers)){
             
             if(mapLayers[i].id === layer._leaflet_id){
-                mapLayers.splice(i,1,{ id: layer._leaflet_id, zone_intervention_id: projet, quartier: {nom_fr: mapLayers[i].quartier.nom, nom_ar: mapLayers[i].quartier.nom_ar}, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
+                mapLayers.splice(i,1,{ id: layer._leaflet_id, commune_id: commune.id, quartier: {nom_fr: mapLayers[i].quartier.nom, nom_ar: mapLayers[i].quartier.nom_ar}, center: layer.getCenter(), latlngs: layer.getLatLngs()[0] });
             }
         }
     }
@@ -130,15 +145,26 @@ export default function MapFormAdd() {
     return (
         <React.Fragment>
         <Container>
-                { projet ? 
+                { commune ?
                     <Card>
                         <Card.Body>
-                            <MapContainer  center={[34.886917, 9.537499]} zoom={7}>
-                            <TileLayer
-                                attribution='&copy; <a href="http://osm.org/copyright">
-                                OpenStreetMap</a> contributors'
+                            <MapContainer  center={[34.886917, 9.537499]} zoom={7} zoomControl={false}>
+                            <LayersControl position="bottomright">
+                            <BaseLayer checked name="osm">
+                                <TileLayer
+                                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
+                                />
+                            </BaseLayer>
+                            <BaseLayer name="satellite">
+                                <TileLayer
+                                attribution='&copy; <a href="server.arcgisonline.com">arcgisonline Maps</a> contributors'
+                                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                                />
+                            </BaseLayer>
+                            </LayersControl>
+                            <ZoomControl position="bottomleft" zoomInText="+" zoomOutText="-" />
+                            
                             
                             <FeatureGroup>
                                 <EditControl
@@ -165,25 +191,36 @@ export default function MapFormAdd() {
                     <Card>
                         <Card.Header>
                         <Select className="py-2"
-                            placeholder="Select Projet ..."
+                            placeholder="Select Gouvernorat ..."
 							closeMenuOnSelect={false}
 							components={animatedComponents}
-							options={projets}
-                            onChange={handlesChange}
+							options={gouvernorats}
+                            onChange={handlesChangeGouvernorat}
+                            defaultValue={gouvernorats[0]}
 						/>	
+                        { gouvernorat ?
+                        <Select className="py-2"
+                            placeholder="Select Commune ..."
+							closeMenuOnSelect={false}
+							components={animatedComponents}
+							options={communes}
+                            
+                            onChange={handlesChangeCommune}
+						/> : ''}
                         </Card.Header>
                         <Card.Body>	  
                             
-                            <Button variant="primary" size="lg" onClick={addQuartier} block>
+                            <Button variant="primary" onClick={addQuartier}>
                                 Enregistrer
-                            </Button> 
+                            </Button>
+                            
                         </Card.Body>
                     </Card>
 
         </Container>
 
         <Modal show={show} onHide={() => setShow(false)}>
-            <Modal.Header closeButton>
+            <Modal.Header >
             <Modal.Title>Nom quartier</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -203,8 +240,11 @@ export default function MapFormAdd() {
             <Modal.Footer>
            
             <Button variant="primary" onClick={() => { mapLayers[mapLayers.length - 1].quartier.nom_fr = nom_fr; mapLayers[mapLayers.length - 1].quartier.nom_ar = nom_ar; setNomFr(""); setNomAr(""); setShow(false); }}>
-                Save
+                Enregistrer
             </Button>
+            <Button variant="danger" onClick={() => setShow(false)}>
+                Fermer
+            </Button> 
             </Modal.Footer>
         </Modal>
         </React.Fragment>

@@ -34,7 +34,7 @@ export default function Settings() {
         
 		try {
             
-			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/modifierProfile';
+			const url ='http://localhost:4000/api/v1/utilisateurs/modifierProfile';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
@@ -59,7 +59,7 @@ export default function Settings() {
         console.log(data)
         try {
             
-			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/modifierProfile';
+			const url ='http://localhost:4000/api/v1/utilisateurs/modifierProfile';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
@@ -93,7 +93,7 @@ export default function Settings() {
         console.log(data)
         try {
             
-			const url ='https://priqh2.herokuapp.com/api/v1/utilisateurs/modifierMotDePasse';
+			const url ='http://localhost:4000/api/v1/utilisateurs/modifierMotDePasse';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',

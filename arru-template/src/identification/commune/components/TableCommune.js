@@ -6,7 +6,7 @@ import FeatherIcon from 'feather-icons-react';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { useStoreDispatch } from '../../context/store';
+import { useStoreDispatch } from '../../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap'
 
@@ -20,7 +20,7 @@ const TableCommune = React.forwardRef((props, ref) => {
 
   const deleteCommune = async () => {
 		try {
-			const url =`https://priqh2.herokuapp.com/api/v1/communes/${commune.id}`;
+			const url =`http://localhost:4000/api/v1/communes/${commune.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -49,7 +49,7 @@ const TableCommune = React.forwardRef((props, ref) => {
   const fetchCommunes = async () => {
   
     try {
-			const url ='https://priqh2.herokuapp.com/api/v1/communes/';
+			const url ='http://localhost:4000/api/v1/communes/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -62,10 +62,10 @@ const TableCommune = React.forwardRef((props, ref) => {
         let communes = [];
         for(const commune of res.data.communes){
           communes.push({
-              id: commune.id,
+              code: commune.code,
+              gouvernorat: commune.gouvernorat.nom_fr,
               nom_fr: commune.nom_fr,
               nom_ar: commune.nom_ar,
-              
               modifier :<span onClick={() => dispatch({ type:'communeEdit', payload: commune })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
               supprimer : <span onClick={() => { setCommune(commune); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
           });
@@ -74,12 +74,16 @@ const TableCommune = React.forwardRef((props, ref) => {
         setDatatable({
           columns: [
             {
-              label: 'Id',
-              field: 'id',
+              label: 'Code',
+              field: 'code',
               attributes: {
                 'aria-controls': 'DataTable',
-                'aria-label': 'id',
+                'aria-label': 'code',
               },
+            },
+            {
+              label: 'Gouvernorat',
+              field: 'gouvernorat',
             },
             {
               label: 'Nom en francais',
@@ -93,13 +97,13 @@ const TableCommune = React.forwardRef((props, ref) => {
                 label: 'Modifier',
                 field: 'modifier',
                 sort : 'disabled',
-                width: 50,
+                width: 100,
             },
             {
                 label: 'Supprimer',
                 field: 'supprimer',
                 sort : 'disabled',
-                width: 50,
+                width: 100,
             },
           ],
           rows: communes,
@@ -125,7 +129,7 @@ const TableCommune = React.forwardRef((props, ref) => {
             
         {
             loading ?
-            <div class="d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
             <Col md="auto" >
             <Spinner
 							as="span"

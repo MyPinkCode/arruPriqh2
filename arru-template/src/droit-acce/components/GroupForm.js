@@ -14,7 +14,7 @@ export default function GroupForm({ role }) {
 
 	const fetchSpecifications = async () => {
 		try {
-			const url ='https://priqh2.herokuapp.com/api/v1/specifications/';
+			const url ='http://localhost:4000/api/v1/specifications/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -41,7 +41,7 @@ export default function GroupForm({ role }) {
 	const updateRole = async () => {
 		const data = { relations:{specifications: selectedSpecifications} }
 		try{
-			const url = `https://priqh2.herokuapp.com/api/v1/roles/${role.id}`;
+			const url = `http://localhost:4000/api/v1/roles/${role.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'put',
