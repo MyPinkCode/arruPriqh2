@@ -26,14 +26,10 @@ export default function Settings() {
         if( nomprenom.nom ) form.append('nom', nomprenom.nom);
         if( nomprenom.prenom ) form.append('nom', nomprenom.prenom);
         if( document.getElementById('image').files[0] !== undefined ) form.append('image', document.getElementById('image').files[0]);
-        //console.log("image: ",document.getElementById('image').files[0]);
-        
-        //form.append('description', document.getElementById('course-description').value);
 
         console.log(form.get('image'));
         
 		try {
-            
 			const url ='http://localhost:4000/api/v1/utilisateurs/modifierProfile';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},

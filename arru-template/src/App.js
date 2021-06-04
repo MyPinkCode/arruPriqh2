@@ -18,9 +18,11 @@ import Criteres from './identification/critere/Criteres'
 
 import Commune from './identification/commune/Communes'
 import Elig from './identification/pages/Eligible'
-import Beilleurs from './identification/pages/Beilleurs'
+import Beilleurs from './financement/bailleur_fonds/Beilleurs'
 import Tranches from './identification/pages/Tranches'
 import Budget from './identification/pages/Budget'
+import Prestataire from './financement/prestataire/Prestataire'
+
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import { StoreProvider } from './context/store';
@@ -59,6 +61,7 @@ function App() {
             <DynamicRoutes exact path="/beilleurs" component={Beilleurs} authenticated />
             <DynamicRoutes exact path="/Tranches" component={Tranches} authenticated />
             <DynamicRoutes exact path="/Budget" component={Budget} authenticated />
+            <DynamicRoutes exact path="/Prestataire" component={Prestataire} authenticated />
             <DynamicRoutes component={E404} authenticated />
           </Switch>
           <Footer />

@@ -11,8 +11,8 @@ import './steps/main.css';
 export default function FormProjet() {
 
 	const steps = [
-		{ name: "Quartiers", component: <Step2 /> },
-		{ name: "Projet", component: <Step1 /> },
+		{ name: "Projet", component: <Step2 /> },
+		{ name: "Quartiers", component: <Step1 /> },
 		{ name: "Infrastructure", component: <Step3 /> },
 		{ name: "Etude", component: <Step4 /> }
 	  ]

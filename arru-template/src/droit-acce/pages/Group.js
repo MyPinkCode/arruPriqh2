@@ -64,14 +64,14 @@ export default function Group() {
 									</thead>
 									<tbody>
 									{roles.map((role,index) => (
-										<tr>
+										<tr key={index}>
 											<td>{role.titre}</td>
 											<td>
                                             	<Table responsive>
 													<tbody>
 														{role.specification.map((specification,index) => (
 														<tr>
-															<td>{specification.titre}</td>
+															<td key={index}>{specification.titre}</td>
 														</tr>
 														))}
 													</tbody>

@@ -4,6 +4,7 @@ const StoreStateContext = React.createContext();
 const StoreDispatchContext = React.createContext();
 
 let projet = null;
+let prestataire = null;
 let newProjet = null;
 let commune = null;
 let gouvernorat = localStorage.getItem('gouvernoratPriqh2');
@@ -48,6 +49,11 @@ const loadValues = () => {
 
 const storeReducer = (state, action) => {
     switch(action.type) {
+        case 'prestataireEdit' :
+            return {
+                ...state,
+                prestataire: action.payload,
+            }
         case 'newProjet' :
             return {
                 ...state,
@@ -76,7 +82,7 @@ const storeReducer = (state, action) => {
 }
 
 export const StoreProvider = ({ children }) => {
-    const [state, dispatch] = React.useReducer(storeReducer, { projet, commune, gouvernorat, newProjet });
+    const [state, dispatch] = React.useReducer(storeReducer, { projet, commune, gouvernorat, newProjet, prestataire });
 
     return (
         <StoreDispatchContext.Provider value={dispatch}>

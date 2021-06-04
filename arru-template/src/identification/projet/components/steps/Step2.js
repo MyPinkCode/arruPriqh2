@@ -9,34 +9,38 @@ export default function Step2() {
     const dispatch = useStoreDispatch();
     const { newProjet } = useStoreState();
 
+	const dispatchData = () => {
+		dispatch({type: "newProjet", payload: {...newProjet, projet}});
+	}
+
   return (
     <div>
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nombre quartiers</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre quartiers"
-					onChange={(e) => {setProjet({ ...projet, nbr_qaurtiers: e.target.value * 1 }); dispatch({type: "newProjet", payload: {...newProjet, projet}}) }}/>
+					onChange={(e) => {projet.nbr_qaurtiers= e.target.value * 1;  dispatchData(); }}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Surface Urbanisée (Hectar)</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Surface Urbanisée (Hectar)"
-					onChange={(e) => { setProjet({...projet, surface_urbanisée_totale: e.target.value * 1}); dispatch({type: "newProjet", payload: {...newProjet, projet}}) }}/>
+					onChange={(e) => { projet.surface_urbanisée_totale= e.target.value * 1;  dispatchData(); }}/>
 				</div>
 			</div>
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nombre de logements</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre de logements"
-					onChange={(e) => { setProjet({...projet, nombre_logements_totale: e.target.value * 1}); dispatch({type: "newProjet", payload: {...newProjet, projet}}) }}/>
+					onChange={(e) => { projet.nombre_logements_totale= e.target.value * 1; dispatchData(); }}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nombre habitants</label>
                 <div className="col-sm-9">
 					<input type="number" className="form-control" placeholder="Nombre habitants"
-					onChange={(e) => { setProjet({...projet, nombre_habitants_totale: e.target.value * 1}); dispatch({type: "newProjet", payload: {...newProjet, projet}}); }}/>
+					onChange={(e) => { projet.nombre_habitants_totale= e.target.value * 1; dispatchData(); }}/>
 				</div>
 			</div>
     </div>

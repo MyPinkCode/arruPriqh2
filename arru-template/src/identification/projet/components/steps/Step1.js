@@ -10,15 +10,18 @@ export default function Step1() {
     const dispatch = useStoreDispatch();
     const { newProjet } = useStoreState();
 
+	console.log(newProjet);
+
     const animatedComponents = makeAnimated();
     
-    const [projet, setProjet] = React.useState(useStoreState().newProjet);
+    
 	const [gouvernorats, setGouvernorats] = React.useState(null);
 	const [gouvernorat, setGouvernorat] = React.useState(null);
 	const [communes, setCommunes] = React.useState(null);
 	const [commune, setCommune] = React.useState(null);
     const [quartiers, setQuartiers] = React.useState([]);
     const [selectedQuartiers, setSelectedQuartiers] = React.useState([]);
+	const [nom, setNom] = React.useState('');
 
     const [disabled, setDisabled] = React.useState(false);
 
@@ -48,10 +51,14 @@ export default function Step1() {
     }
 
 	const handlesChangeQuartier = (e) => {
-		setSelectedQuartiers(Array.isArray(e) ? e.map(x => x.value) : []);
-        if(selectedQuartiers.length === newProjet.nbr_qaurtiers){
-            setQuartiers([]);
-        }
+		dispatch({ type: "newProjet", payload: { ...newProjet, projet: { ...(newProjet.projet) }, quartiers: e.map(x => x.value) } });
+       /* if(e.map(x => x.value).length === newProjet.projet.nbr_qaurtiers){
+			setSelectedQuartiers(quartiers);
+			setQuartiers([]);
+        }else{
+			dispatch({ type: "newProjet", payload: { ...newProjet, quartiers: e.map(x => x.value) } });
+			setQuartiers(selectedQuartiers);
+		}*/
 	}
 
 	const fetchQuartiers = async () => {
@@ -127,7 +134,6 @@ export default function Step1() {
 					<div className="boxes">
 						<Select
 							placeholder="Select Quartiers ..."
-							defaultValue="options"
 							components={animatedComponents}
 							isMulti
 							options={quartiers}

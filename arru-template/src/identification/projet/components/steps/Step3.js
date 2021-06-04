@@ -4,13 +4,26 @@ import { useStoreState } from '../../../../context/store';
 
 export default function Step3() {
 
+	const { newProjet } = useStoreState();
+
+	console.log(newProjet);
     
     const [quartiers, setQuartiers] = React.useState([]);
-	const [drainage, setDrainage] = React.useState({type: 'Drainage'});
-	const [voirie, setVoirie] = React.useState({type: 'Voirie'});
-	const [assainissement, setAssainissement] = React.useState({type: 'Assainissement'});
-	const [eclairage, setEclairage] = React.useState({type: 'Eclairage public'});
-	const [eau, setEau] = React.useState({type: 'Eau potable'});
+	const [drainage, setDrainage] = React.useState({type: 'drainage des eaux pluviales', quantité: 0, cout: 0});
+	const [voirie, setVoirie] = React.useState({type: 'voirie', quantité: 0, cout: 0});
+	const [assainissement, setAssainissement] = React.useState({type: 'assainissement', quantité: 0, cout: 0});
+	const [eclairage, setEclairage] = React.useState({type: 'eclairage public', quantité: 0, cout: 0});
+	const [eau, setEau] = React.useState({type: 'eau potable', quantité: 0, cout: 0});
+
+	const dispatch = useStoreDispatch();
+
+	const dispatchData = () => {
+		dispatch({ type: "newProjet", payload: {...newProjet, infrastructures: [drainage, voirie, assainissement, eclairage, eau] }});
+	}
+
+	React.useEffect(() => {
+		dispatchData();
+	},[]);
 	
   return (
     <div>
@@ -18,55 +31,55 @@ export default function Step3() {
                 <label className="col-form-label col-sm-3 text-sm-left">Drainage</label>
                 <div className="col-sm-4">
 					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { setDrainage({...drainage, quantité: e.target.value * 1})}}/>
+					onChange={(e) => { drainage.quantité= e.target.value * 1; dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
-					onChange={(e) => { setDrainage({...drainage, cout: e.target.value * 1})}}/>
+					onChange={(e) => { drainage.cout= e.target.value * 1;  dispatchData();}}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Voirie</label>
                 <div className="col-sm-4">
 					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { setVoirie({...voirie, quantité: e.target.value * 1})}}/>
+					onChange={(e) => { voirie.quantité= e.target.value * 1;  dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
-					onChange={(e) => { setVoirie({...voirie, cout: e.target.value * 1})}}/>
+					onChange={(e) => { voirie.cout= e.target.value * 1;  dispatchData();}}/>
 				</div>
 			</div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Assainissement</label>
                 <div className="col-sm-4">
 					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { setAssainissement({...assainissement, quantité: e.target.value * 1})}}/>
+					onChange={(e) => { assainissement.quantité= e.target.value * 1;  dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
-					onChange={(e) => { setAssainissement({...assainissement, cout: e.target.value * 1})}}/>
+					onChange={(e) => { assainissement.cout= e.target.value * 1;  dispatchData();}}/>
 				</div>
             </div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eclairage Public</label>
                 <div className="col-sm-4">
 					<input type="number" className="form-control" placeholder="p.lumineux"
-					onChange={(e) => { setEclairage({...eclairage, quantité: e.target.value * 1})}}/>
+					onChange={(e) => { eclairage.quantité= e.target.value * 1; dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
-					onChange={(e) => { setEclairage({...eclairage, cout: e.target.value * 1})}}/>
+					onChange={(e) => { eclairage.cout= e.target.value * 1;  dispatchData();}}/>
 				</div>
             </div>
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eau potable</label>
                 <div className="col-sm-4">
 					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { setEau({...eau, quantité: e.target.value * 1})}}/>
+					onChange={(e) => { eau.quantité= e.target.value * 1;  dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
-					onChange={(e) => { setEau({...eau, cout: e.target.value * 1})}}/>
+					onChange={(e) => { eau.cout= e.target.value * 1;  dispatchData();}}/>
 				</div>
             </div>
     </div>

@@ -7,16 +7,20 @@ import { useStoreState } from '../../../../context/store';
 
 export default function Step4() {
 
-    const [etude, setEtude] = React.useState({});
-
-    const addProjet = async() => {
+	const { newProjet } = useStoreState();
+	console.log(newProjet);
+    const [etude, setEtude] = React.useState({ bureau_etude: '', cout_etude: 0 });
+	const dispatch = useStoreDispatch();
+    const AddProjet = async() => {
+	
+		
 		try{
 			const url ='http://localhost:4000/api/v1/projets/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'post',
 			  	url,
-				//data: {projet,etude,infrastructures:[drainage,voirie,assainissement,eclairage,eau]}
+				data: {...newProjet, projet: {...(newProjet.projet), ...etude} }
 			});
 
 			toast.success('Success', {
@@ -45,17 +49,17 @@ export default function Step4() {
                 <label className="col-form-label col-sm-3 text-sm-left">Etude</label>
                 <div className="col-sm-4">
 					<input type="text" className="form-control" placeholder="Bureau"
-					onChange={(e) => { setEtude({...etude, bureau: e.target.value})}}/>
+					onChange={(e) => { etude.bureau_etude= e.target.value * 1;  }}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
-					onChange={(e) => { setEtude({...etude, cout: e.target.value * 1})}}/>
+					onChange={(e) => { etude.cout_etude= e.target.value * 1; }}/>
 				</div>
             </div>
 
             <div className="mb-3 row">
 				<div className="col-sm-9">
-					<span  className="btn btn-primary" onClick={() => addProjet()}>Submit</span>
+					<span  className="btn btn-primary" onClick={() => AddProjet()}>Submit</span>
 				</div>
 			</div>
     </div>

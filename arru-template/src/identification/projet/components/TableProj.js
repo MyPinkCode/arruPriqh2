@@ -7,7 +7,7 @@ import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStoreDispatch } from '../../../context/store';
-import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Card, Button, Tabs } from 'react-bootstrap';
 
 const TableProj = React.forwardRef((props, ref) => {
 
@@ -60,13 +60,17 @@ const TableProj = React.forwardRef((props, ref) => {
 
         let projets = [];
         for(const projet of res.data.projets){
+          let nomProjet = '';
+          for(const q of projet.quartiers){
+            nomProjet = nomProjet + q.nom_fr + ' '
+          }
           projets.push({
-              nom: "",
+              nom: nomProjet.trim(),
               quartier:
               <ul className="ml-n4" key={projet.id} style={{"listStyleType":"none"}}>
                 {
                   projet.quartiers.map((quartier, index) => (
-                    <div key={index}><p> {quartier.nom} </p>{projet.quartiers.length - 1 > index ? <hr/> : ''}</div>
+                    <div key={index}><p> {quartier.nom_fr} </p>{projet.quartiers.length - 1 > index ? <hr/> : ''}</div>
                   ))
                 }
               </ul>,
@@ -75,16 +79,16 @@ const TableProj = React.forwardRef((props, ref) => {
               Surface: projet.surface_urbanisée_totale,
               logement: projet.nombre_logements_totale,
               habitant: projet.nombre_habitants_totale,
-              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantité && 0,
-              cd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].cout && 0,
-              qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantité && 0,
-              cv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].cout && 0,
-              qep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].quantité && 0,
-              cep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].cout && 0,
-              npl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].quantité && 0,
-              cpl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].cout && 0,
-              qa: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].quantité && 0,
-              ca: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].cout && 0,
+              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantité,
+              cd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].cout,
+              qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantité,
+              cv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].cout,
+              qep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].quantité,
+              cep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].cout,
+              npl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].quantité,
+              cpl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].cout,
+              qa: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].quantité,
+              ca: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].cout,
               be: projet.bureau_etude,
               ce: projet.cout_etude,
               modifier :<span onClick={() => dispatch({ type:'projetEdit', payload: projet })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
@@ -97,6 +101,7 @@ const TableProj = React.forwardRef((props, ref) => {
             {
               label: 'Nom',
               field: 'nom',
+              width: 200,
             },
             {
               label: 'Quartier',
@@ -190,6 +195,8 @@ const TableProj = React.forwardRef((props, ref) => {
           ],
           rows: projets,
         });
+
+      console.log(datatable);
 
       props.setLoading(false);
 
