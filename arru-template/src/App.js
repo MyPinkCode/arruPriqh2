@@ -22,6 +22,7 @@ import Beilleurs from './financement/bailleur_fonds/Beilleurs'
 import Tranches from './identification/pages/Tranches'
 import Budget from './identification/pages/Budget'
 import Prestataire from './financement/prestataire/Prestataire'
+import Memoire from './financement/memoire/Memoire'
 
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
@@ -62,6 +63,7 @@ function App() {
             <DynamicRoutes exact path="/Tranches" component={Tranches} authenticated />
             <DynamicRoutes exact path="/Budget" component={Budget} authenticated />
             <DynamicRoutes exact path="/Prestataire" component={Prestataire} authenticated />
+            <DynamicRoutes exact path="/Memoire" component={Memoire} authenticated />
             <DynamicRoutes component={E404} authenticated />
           </Switch>
           <Footer />

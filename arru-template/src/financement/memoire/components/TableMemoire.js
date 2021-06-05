@@ -10,17 +10,17 @@ import { useStoreDispatch } from '../../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap'
 
-const TablePrestataire = React.forwardRef((props, ref) => {
+const TableMemoire = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
   const dispatch = useStoreDispatch();
-  const [prestataire, setPrestataire] = React.useState({});
+  const [memoire, setMemoire] = React.useState({});
   const [loading, setLoading] = React.useState(true);
 
-  const deletePrestataire = async () => {
+  const deleteMemoire = async () => {
 		try {
-			const url =`http://localhost:4000/api/v1/prestataires/${prestataire.id}`;
+			const url =`http://localhost:4000/api/v1/memoires/${memoire.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -32,7 +32,7 @@ const TablePrestataire = React.forwardRef((props, ref) => {
 				autoClose: 5000,
 				draggable: false
 			});
-			window.location.replace('/prestataire');
+			window.location.replace('/Memoire');
 
 		} catch (err) {
 			toast.error(err.response.data.message, {
@@ -44,10 +44,10 @@ const TablePrestataire = React.forwardRef((props, ref) => {
 		}
 	}
 
-  const fetchPrestataires = async () => {
+  const fetchMemoires = async () => {
   
     try {
-			const url ='http://localhost:4000/api/v1/prestataires/';
+			const url ='http://localhost:4000/api/v1/memoires/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -55,42 +55,65 @@ const TablePrestataire = React.forwardRef((props, ref) => {
 			});
 
 		if (res.status === 200) {
-		console.log(res.data.prestataires);
+		console.log(res.data.memoires);
 
-        let prestataires = [];
-        for(const prestataire of res.data.prestataires){
-            prestataires.push({
-                abreviation: prestataire.abreviation,
-                nom: prestataire.nom,
-                modifier :<span onClick={() => dispatch({ type:'prestataireEdit', payload: prestataire })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
-                supprimer : <span onClick={() => { setPrestataire(prestataire); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+        let memoires = [];
+        for(const memoire of res.data.memoires){
+            memoires.push({
+                projet: memoire.projet.code,
+                htva: memoire.htva,
+                montant_exonere: memoire.montant_exonere,
+                frais_gestion: memoire.frais_gestion,
+                tva: memoire.tva,
+                gestion_frais_tva: memoire.gestion_frais_tva,
+                timbre_fiscale: memoire.timbre_fiscale,
+                modifier :  <span onClick={() => dispatch({ type:'memoireEdit', payload: memoire })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
+                supprimer : <span onClick={() => { setMemoire(memoire); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
             });
         }
 
         setDatatable({
           columns: [
             {
-              label: 'Nom',
-              field: 'nom',
+              label: 'Projet',
+              field: 'projet',
             },
             {
-              label: 'Abreviation',
-              field: 'abreviation',
+              label: 'HTVA',
+              field: 'htva',
+            },
+            {
+              label: 'Montant exonéré',
+              field: 'montant_exonere',
+            },
+            {
+              label: 'TVA',
+              field: 'tva',
+            },
+            {
+              label: 'Gestion Frais TVA',
+              field: 'gestion_frais_tva',
+            },
+            {
+              label: 'Frais Gestion',
+              field: 'frais_gestion',
+            },
+            {
+              label: 'Timbre Fiscale',
+              field: 'timbre_fiscale',
             },
             {
                 label: 'Modifier',
                 field: 'modifier',
                 sort : 'disabled',
-                
             },
             {
                 label: 'Supprimer',
                 field: 'supprimer',
                 sort : 'disabled',
-                
             },
           ],
-          rows: prestataires,
+          rows: memoires,
         });
 
       }
@@ -102,7 +125,7 @@ const TablePrestataire = React.forwardRef((props, ref) => {
   }
 
   React.useEffect(() => {
-    fetchPrestataires();
+    fetchMemoires();
   },[]);
 
 
@@ -141,12 +164,12 @@ const TablePrestataire = React.forwardRef((props, ref) => {
           <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want delete {prestataire.nom}!</Modal.Body>
+          <Modal.Body>Are you sure you want delete {memoire.nom}!</Modal.Body>
           <Modal.Footer>
           <Button variant="danger" onClick={() => setShow(false)}>
             Fermer
           </Button>
-          <Button variant="primary" onClick={() => { deletePrestataire() }}>
+          <Button variant="primary" onClick={() => { deleteMemoire() }}>
             Supprimer
           </Button>
           </Modal.Footer>
@@ -155,4 +178,4 @@ const TablePrestataire = React.forwardRef((props, ref) => {
     )
 });
 
-export default TablePrestataire;
+export default TableMemoire;

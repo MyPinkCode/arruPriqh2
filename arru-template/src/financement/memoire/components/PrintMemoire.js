@@ -21,7 +21,7 @@ const pageStyle = `
     }
   }
 `;
-function PrintPrestataire() {
+function PrintMemoire() {
   const componentRef = React.useRef();
       return (
         <div>
@@ -47,5 +47,5 @@ function PrintPrestataire() {
       );
   }
   
-  export default PrintPrestataire;
+  export default PrintMemoire;
   

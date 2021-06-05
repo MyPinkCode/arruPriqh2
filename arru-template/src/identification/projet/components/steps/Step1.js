@@ -31,7 +31,7 @@ export default function Step1() {
 		let quartiers_options = [];
         
 		for(const quartier of e.value.quartiers){
-			let obj = { value: quartier.id, label: quartier.nom_fr+" - "+ quartier.nom_ar }
+			let obj = { value: quartier, label: quartier.nom_fr+" - "+ quartier.nom_ar }
 			quartiers_options.push(obj);
 		}
 		setQuartiers(quartiers_options);
@@ -51,7 +51,18 @@ export default function Step1() {
     }
 
 	const handlesChangeQuartier = (e) => {
-		dispatch({ type: "newProjet", payload: { ...newProjet, projet: { ...(newProjet.projet) }, quartiers: e.map(x => x.value) } });
+		let nomProjet = '';
+		for(const n of e){
+			nomProjet = nomProjet + n.label.split('-')[0] + ' '
+		}
+
+		let surface_totale = 0;
+		for(const q of e){
+			surface_totale+=q.value.surface
+		}
+
+		console.log(nomProjet);
+		dispatch({ type: "newProjet", payload: { ...newProjet, projet: { ...(newProjet.projet), nom: nomProjet.trim(), surface_totale }, quartiers: e.map(x => x.value.id) } });
        /* if(e.map(x => x.value).length === newProjet.projet.nbr_qaurtiers){
 			setSelectedQuartiers(quartiers);
 			setQuartiers([]);
