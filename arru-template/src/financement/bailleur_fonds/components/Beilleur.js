@@ -51,9 +51,9 @@ export default function Beilleur({name,img,id}) {
     }
 
 	const deleteBailleur = async() => {
-
+		
         try{
-            const url = `http://localhost:4000/api/v1/bailleurs${id}`;
+            const url = `http://localhost:4000/api/v1/bailleurs/${id}`;
 
             const res = await axios({
                 headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
@@ -80,6 +80,8 @@ export default function Beilleur({name,img,id}) {
     }
 
 	const [show, setShow] = React.useState(false);
+	const [show1, setShow1] = React.useState(false);
+
     return (
             	<div className="col-12 col-md-6 col-lg-3">
 					<ToastContainer/>
@@ -94,20 +96,18 @@ export default function Beilleur({name,img,id}) {
 								<div className="card-body px-4 pt-2">
 								<div className="d-flex flex-row-reverse">
 				<div>
-				<span  className="btn btn-danger ml-1" ><FeatherIcon icon="trash-2" /></span>
+					<span  className="btn btn-danger ml-1" onClick={() => setShow1(true)}><FeatherIcon icon="trash-2" /></span>
 				</div>
 				<div >
 				<span  className="btn btn-primary " onClick={() => {  setShow(true); }}><FeatherIcon icon="edit-2" /></span>
 				</div>
 			</div>
                                 </div>
-							
 							</div>
-							
 															
 				<Modal show={show} onHide={() => setShow(false)}>
 					<Modal.Header >
-					<Modal.Title>Modifier Beilleur</Modal.Title>
+						<Modal.Title>Modifier Beilleur</Modal.Title>
 					</Modal.Header>
 					<Modal.Body><div className="row">
                                             <div className="col-md-6">
@@ -136,7 +136,22 @@ export default function Beilleur({name,img,id}) {
                             </Button>
                         </Modal.Footer>
 				</Modal>
+
+				<Modal show={show1} onHide={() => setShow1(false)}>
+					<Modal.Header>
+						<Modal.Title>Confirmation</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>Are you sure you want delete {name}!</Modal.Body>
+					<Modal.Footer>
+						<Button variant="primary" onClick={() => setShow1(false)}>
+							Close
+						</Button>
+						<Button variant="danger" onClick={() => { deleteBailleur() }}>
+							Delete
+						</Button>
+					</Modal.Footer>
+				</Modal>
 											
-						</div>
+			</div>
     )
 }

@@ -11,18 +11,18 @@ import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
-const TableMemoire = React.forwardRef((props, ref) => {
+const TableDecompte = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
   const dispatch = useStoreDispatch();
-  const [memoireEdit, setMemoire] = React.useState({});
+  const [decompteEdit, setDecompte] = React.useState({});
   const [loading, setLoading] = React.useState(true);
 
-  const deleteMemoire = async () => {
-    console.log(memoireEdit);
+  const deleteDecompte = async () => {
+    console.log(decompteEdit);
 		try {
-			const url =`http://localhost:4000/api/v1/memoires/${memoireEdit.id}`;
+			const url =`http://localhost:4000/api/v1/decomptes/${decompteEdit.id}`;
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'delete',
@@ -34,7 +34,7 @@ const TableMemoire = React.forwardRef((props, ref) => {
 				autoClose: 5000,
 				draggable: false
 			});
-			window.location.replace('/Memoire');
+			window.location.replace('/decompte');
 
 		} catch (err) {
 			toast.error(err.response.data.message, {
@@ -46,10 +46,10 @@ const TableMemoire = React.forwardRef((props, ref) => {
 		}
 	}
 
-  const fetchMemoires = async () => {
+  const fetchDecomptes = async () => {
   
     try {
-			const url ='http://localhost:4000/api/v1/memoires/';
+			const url ='http://localhost:4000/api/v1/decomptes/';
 			const res = await axios({
 				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			  	method: 'get',
@@ -57,20 +57,17 @@ const TableMemoire = React.forwardRef((props, ref) => {
 			});
 
 		if (res.status === 200) {
-		console.log(res.data.memoires);
+		console.log(res.data.decomptes);
 
-        let memoires = [];
-        for(const memoire of res.data.memoires){
-            memoires.push({
-                projet: <Link to={`/Financement/${memoire.id}`}>{memoire.projet.code}</Link>,
-                htva: memoire.htva,
-                montant_exonere: memoire.montant_exonere,
-                frais_gestion: memoire.frais_gestion,
-                tva: memoire.tva,
-                gestion_frais_tva: memoire.gestion_frais_tva,
-                timbre_fiscale: memoire.timbre_fiscale,
-                modifier :  <span onClick={() => dispatch({ type:'memoireEdit', payload: memoire })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
-                supprimer : <span onClick={() => { setMemoire(memoire); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+        let decomptes = [];
+        for(const decompte of res.data.decomptes){
+            decomptes.push({
+                projet: decompte.memoire.projet.code,
+                prestataire: decompte.prestataire.abreviation,
+                montant: decompte.montant,
+                date: new Date(decompte.date_paiement).toLocaleDateString(),
+                modifier :  <span onClick={() => dispatch({ type:'decompteEdit', payload: decompte })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
+                supprimer : <span onClick={() => { setDecompte(decompte); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
             });
         }
 
@@ -81,28 +78,16 @@ const TableMemoire = React.forwardRef((props, ref) => {
               field: 'projet',
             },
             {
-              label: 'HTVA',
-              field: 'htva',
+              label: 'Prestataire',
+              field: 'prestataire',
             },
             {
-              label: 'Montant exonéré',
-              field: 'montant_exonere',
+              label: 'Montant',
+              field: 'montant',
             },
             {
-              label: 'TVA',
-              field: 'tva',
-            },
-            {
-              label: 'Gestion Frais TVA',
-              field: 'gestion_frais_tva',
-            },
-            {
-              label: 'Frais Gestion',
-              field: 'frais_gestion',
-            },
-            {
-              label: 'Timbre Fiscale',
-              field: 'timbre_fiscale',
+              label: 'Date Paiement',
+              field: 'date',
             },
             {
                 label: 'Modifier',
@@ -115,19 +100,19 @@ const TableMemoire = React.forwardRef((props, ref) => {
                 sort : 'disabled',
             },
           ],
-          rows: memoires,
+          rows: decomptes,
         });
 
       }
       setLoading(false);
 
 			} catch (err) {
-				console.log(err.response.data.message);
+				console.log(err);
 			}
   }
 
   React.useEffect(() => {
-    fetchMemoires();
+    fetchDecomptes();
   },[]);
 
     return (
@@ -164,12 +149,12 @@ const TableMemoire = React.forwardRef((props, ref) => {
           <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Are you sure you want delete memoire of this projet {memoireEdit.projet ? memoireEdit.projet.code : ''} !</Modal.Body>
+          <Modal.Body>Are you sure you want delete decompte of this decompte !</Modal.Body>
           <Modal.Footer>
           <Button variant="danger" onClick={() => setShow(false)}>
             Fermer
           </Button>
-          <Button variant="primary" onClick={() => { deleteMemoire() }}>
+          <Button variant="primary" onClick={() => { deleteDecompte() }}>
             Supprimer
           </Button>
           </Modal.Footer>
@@ -178,4 +163,4 @@ const TableMemoire = React.forwardRef((props, ref) => {
     )
 });
 
-export default TableMemoire;
+export default TableDecompte;

@@ -69,6 +69,8 @@ export default function Sidebar(props) {
 					<SidebarItem title="Tranches" icon="pie-chart" l="/Tranches" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Budget" icon="dollar-sign" l="/Budget" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Prestataire" icon="dollar-sign" l="/Prestataire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Memoire" icon="dollar-sign" l="/Memoire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Decompte" icon="dollar-sign" l="/Decompte" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					
 					<li className="sidebar-header">
 						profile

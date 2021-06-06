@@ -7,6 +7,8 @@ let projet = null;
 let prestataire = null;
 let newProjet = null;
 let commune = null;
+let memoire = null;
+let financements = null;
 let gouvernorat = localStorage.getItem('gouvernoratPriqh2');
 
 if(!gouvernorat){
@@ -49,6 +51,16 @@ const loadValues = () => {
 
 const storeReducer = (state, action) => {
     switch(action.type) {
+        case 'financementEdit' :
+            return {
+                ...state,
+                financements: action.payload,
+            }
+        case 'memoireEdit' :
+            return {
+                ...state,
+                memoire: action.payload,
+            }
         case 'prestataireEdit' :
             return {
                 ...state,
@@ -82,7 +94,7 @@ const storeReducer = (state, action) => {
 }
 
 export const StoreProvider = ({ children }) => {
-    const [state, dispatch] = React.useReducer(storeReducer, { projet, commune, gouvernorat, newProjet, prestataire });
+    const [state, dispatch] = React.useReducer(storeReducer, { projet, commune, gouvernorat, newProjet, prestataire, memoire, financements });
 
     return (
         <StoreDispatchContext.Provider value={dispatch}>

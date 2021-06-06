@@ -18,33 +18,33 @@ export default function Tranches() {
                     
                     <Row className="mt-2">
 						<Col>
-                        Tranche 1
-            </Col>
+                            Tranche 1
+                        </Col>
 						<Col md="auto">
-              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
+                            <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
 								Montant : 3500 MDT
 							</Button>
-            </Col>
+                        </Col>
 						
 					</Row>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey="0">
                     <Card.Body>
-                        <TranchTab />
-</Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-                <Card>
+                        
+                        </Card.Body>
+                        </Accordion.Collapse>
+                        </Card>
+                    <Card>
                     <Accordion.Toggle as={Card.Header} eventKey="1">
                     <Row className="mt-2">
 						<Col>
-                        Tranche 2
-            </Col>
+                            Tranche 2
+                        </Col>
 						<Col md="auto">
-              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
+                            <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
 								Montant : 2800 MDT
 							</Button>
-            </Col>
+                        </Col>
 						
 					</Row>
                     </Accordion.Toggle>

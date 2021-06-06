@@ -19,10 +19,12 @@ import Criteres from './identification/critere/Criteres'
 import Commune from './identification/commune/Communes'
 import Elig from './identification/pages/Eligible'
 import Beilleurs from './financement/bailleur_fonds/Beilleurs'
-import Tranches from './identification/pages/Tranches'
+import Tranches from './identification/tranche/Tranches'
 import Budget from './identification/pages/Budget'
 import Prestataire from './financement/prestataire/Prestataire'
 import Memoire from './financement/memoire/Memoire'
+import Financement from './financement/financement/Financement'
+import Decompte from './financement/decompte/Decompte'
 
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
@@ -34,6 +36,10 @@ import './Scroll.css';
 
 
 function App() {
+
+  if (typeof window !== 'undefined') {
+    window.React = React;
+  }
  
   return (
     
@@ -64,6 +70,8 @@ function App() {
             <DynamicRoutes exact path="/Budget" component={Budget} authenticated />
             <DynamicRoutes exact path="/Prestataire" component={Prestataire} authenticated />
             <DynamicRoutes exact path="/Memoire" component={Memoire} authenticated />
+            <DynamicRoutes exact path="/Financement/:id" component={Financement} authenticated />
+            <DynamicRoutes exact path="/Decompte" component={Decompte} authenticated />
             <DynamicRoutes component={E404} authenticated />
           </Switch>
           <Footer />

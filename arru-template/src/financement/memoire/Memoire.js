@@ -18,7 +18,7 @@ export default function Prestataire() {
 			<LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
 				<div className="container-fluid p-0">
 
-					<h1 className="h3 mb-3">Gestion des Prestataires</h1>
+					<h1 className="h3 mb-3">Gestion des Memoires</h1>
 
 					<div className="row">
 					

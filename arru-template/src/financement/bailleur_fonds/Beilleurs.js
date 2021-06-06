@@ -128,6 +128,8 @@ export default function Beilleurs() {
                             </Button>
                         </Modal.Footer>
 				</Modal>
+
+            
         </main>
     )
 }
