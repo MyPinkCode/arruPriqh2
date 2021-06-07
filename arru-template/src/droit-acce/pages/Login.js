@@ -5,9 +5,16 @@ import { useAuthState } from '../../context/auth';
 import { Button, Spinner } from 'react-bootstrap';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useKeypress from 'react-use-keypress';
 
 export default function Login() {
 
+	useKeypress(['Enter'], (event) => {
+		if(event.key === 'Enter'){
+			login(event);
+		}
+	  });
+	
 	const { user } = useAuthState();
 	const [loading, setLoading] = React.useState(false);
 

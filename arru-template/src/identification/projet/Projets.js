@@ -17,6 +17,7 @@ export default function Projets() {
 	const [show, setShow] = React.useState(false);
 	const [projet, setProjet] = React.useState({});
 	const [progress, setProgress] = React.useState(0);
+	
 	const fetchProjets = async () => {
 		try {
 			const url ='http://localhost:4000/api/v1/projets/';

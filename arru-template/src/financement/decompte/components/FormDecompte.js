@@ -27,6 +27,7 @@ export default function FormDecompte() {
 				prestataires_options.push(obj);
 			}
 			setPrestataires(prestataires_options);
+
 		} catch(err) {
 			console.log(err.response.data.message);
 		}
@@ -45,8 +46,8 @@ export default function FormDecompte() {
 			for(const memoire of res.data.memoires){
                 console.log(memoire.decompte === null,memoire.decompte)
                 if(memoire.decompte === null){
-				let obj = { value: memoire.id, label: memoire.projet.code }
-				memoires_options.push(obj);
+					let obj = { value: memoire.id, label: memoire.projet.code }
+					memoires_options.push(obj);
                 }
 			}
 			setMemoires(memoires_options);
@@ -54,7 +55,6 @@ export default function FormDecompte() {
 			console.log(err.response.data.message);
 		}
 	}
-
 
     const addDecompte = async () => {
 		console.log(decompte);

@@ -20,20 +20,21 @@ const TableProjEligible = React.forwardRef((props, ref) => {
 
   const ineligible = async () => {
     try{
-        const url =`http://localhost:4000/api/v1/criteres/ineligible/${projet.id}`;
+    const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
 		const res = await axios({
 			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
 			method: 'put',
 			url,
+      data: { eligible: {eligible: false } }
 		});
 
-        toast.success('Success', {
-            position: 'top-right',
-            autoClose: 5000,
-            draggable: false
-        });
+    toast.success('Success', {
+        position: 'top-right',
+        autoClose: 5000,
+        draggable: false
+    });
 
-        window.location.replace('/Eligible');
+    window.location.replace('/Eligible');
 
     }catch(err){
         console.log(err);
@@ -47,7 +48,7 @@ const TableProjEligible = React.forwardRef((props, ref) => {
   
 
     const fetchProjets = async () => {
-        try {
+      try {
 		const url ='http://localhost:4000/api/v1/projets/';
 		const res = await axios({
 			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
@@ -57,37 +58,39 @@ const TableProjEligible = React.forwardRef((props, ref) => {
 		
         let projets = [];
         for(const projet of res.data.projets){
-            console.log(projet.eligible)
+        
         if(projet.eligible === true){
+          let nomProjet = '';
+          for(const q of projet.quartiers){
+            nomProjet = nomProjet + q.nom_fr + ' '
+          }
           projets.push({
-              gouvernorat: projet.gouvernorat.nom,
-              commune: projet.commune.nom,
-              nom: projet.zone.nom_fr,
-              quartier:
-              <ul className="ml-n4" key={projet.id} style={{"listStyleType":"none"}}>
-                {
-                  projet.quartiers.map((quartier, index) => (
-                    <div key={index}><p> {quartier.nom} </p>{projet.quartiers.length - 1 > index ? <hr/> : ''}</div>
-                  ))
-                }
-              </ul>,
-              Nombre: projet.zone.nbr_quartier,
-              Surfaces: projet.zone.surface_totale,
-              Surface: projet.zone.surface_urbanisée_totale,
-              logement: projet.zone.nombre_logements_totale,
-              habitant: projet.zone.nombre_habitants_totale,
-              qd: projet.infrastructures.filter((infra)=> infra.type === "Drainage")[0].quantité,
-              cd: projet.infrastructures.filter((infra)=> infra.type === "Drainage")[0].cout,
-              qv: projet.infrastructures.filter((infra)=> infra.type === "Voirie")[0].quantité,
-              cv: projet.infrastructures.filter((infra)=> infra.type === "Voirie")[0].cout,
-              qep: projet.infrastructures.filter((infra)=> infra.type === "Eau potable")[0].quantité,
-              cep: projet.infrastructures.filter((infra)=> infra.type === "Eau potable")[0].cout,
-              npl: projet.infrastructures.filter((infra)=> infra.type === "Eclairage public")[0].quantité,
-              cpl: projet.infrastructures.filter((infra)=> infra.type === "Eclairage public")[0].cout,
-              qa: projet.infrastructures.filter((infra)=> infra.type === "Assainissement")[0].quantité,
-              ca: projet.infrastructures.filter((infra)=> infra.type === "Assainissement")[0].cout,
-              be: projet.etude && projet.etude.bureau ? projet.etude.bureau : '',
-              ce: projet.etude && projet.etude.cout ? projet.etude.cout : '',
+            nom: nomProjet.trim(),
+            quartier:
+            <ul className="ml-n4" key={projet.id} style={{"listStyleType":"none"}}>
+              {
+                projet.quartiers.map((quartier, index) => (
+                  <div key={index}><p> {quartier.nom_fr} </p>{projet.quartiers.length - 1 > index ? <hr/> : ''}</div>
+                ))
+              }
+            </ul>,
+            Nombre: projet.nbr_quartiers,
+            Surfaces: projet.surface_totale,
+            Surface: projet.surface_urbanisée_totale,
+            logement: projet.nombre_logements_totale,
+            habitant: projet.nombre_habitants_totale,
+            qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantité,
+            cd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].cout,
+            qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantité,
+            cv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].cout,
+            qep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].quantité,
+            cep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].cout,
+            npl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].quantité,
+            cpl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].cout,
+            qa: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].quantité,
+            ca: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].cout,
+            be: projet.bureau_etude,
+            ce: projet.cout_etude,
               action : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="tool" /></span>,
           });
         }
@@ -97,20 +100,9 @@ const TableProjEligible = React.forwardRef((props, ref) => {
         setDatatable({
           columns: [
             {
-              label: 'Gouvernorat',
-              field: 'gouvernorat',
-              attributes: {
-                'aria-controls': 'DataTable',
-                'aria-label': 'gouvernorat',
-              },
-            },
-            {
-              label: 'Commune',
-              field: 'commune',
-            },
-            {
               label: 'Nom',
               field: 'nom',
+              width: 200,
             },
             {
               label: 'Quartier',

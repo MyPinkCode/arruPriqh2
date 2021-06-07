@@ -3,69 +3,24 @@ import { MDBDataTableV5 } from 'mdbreact';
 import 'mdbreact/dist/css/mdb.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import FeatherIcon from 'feather-icons-react';
-import axios from 'axios';
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useStoreDispatch } from '../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap'
 
-const TableProjIneligible = React.forwardRef((props, ref) => {
+const TableTranche = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
   const [loading, setLoading] = React.useState(true);
 
   const [projet, setProjet] = React.useState({});
   const [show, setShow] = React.useState(false);
-
-  const eligible = async () => {
-    try{
-    const url =`http://localhost:4000/api/v1/projets/${projet.id}`;
-		const res = await axios({
-			headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			method: 'put',
-			url,
-      data:  { eligible: {eligible: true } }
-		});
-
-        console.log(res);
-
-        toast.success('Success', {
-            position: 'top-right',
-            autoClose: 5000,
-            draggable: false
-        });
-
-        window.location.replace('/Eligible');
-
-    }catch(err){
-        console.log(err);
-
-        toast.error(err.response.data.message, {
-            position: 'top-right',
-            autoClose: 5000,
-            draggable: true
-        });
-    }
-  }
   
 
   const fetchProjets = async () => {
-    try {
-			const url ='http://localhost:4000/api/v1/projets/';
-			const res = await axios({
-				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-			  method: 'get',
-			  url,
-			});
 
-		
-				console.log(res.data.projets);
 
         let projets = [];
-        for(const projet of res.data.projets){
+        for(const projet of props.projets){
             
-        if(projet.eligible === false){
           let nomProjet = '';
           for(const q of projet.quartiers){
             nomProjet = nomProjet + q.nom_fr + ' '
@@ -99,7 +54,7 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
               ce: projet.cout_etude,
               action : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="tool" /></span>,
           });
-        }
+        
         }
 
         setDatatable({
@@ -107,35 +62,6 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
             {
               label: 'Nom',
               field: 'nom',
-              width: 200,
-            },
-            {
-              label: 'Quartier',
-              field: 'quartier',
-            },
-            {
-              label: 'Nombre de quartier',
-              field: 'Nombre',
-              width: 200,
-            },
-            {
-              label: 'Surface Totale (Hectar)',
-              field: 'Surfaces',
-              width: 200,
-            },
-            {
-              label: 'Surface Urbanisée (Hectar)',
-              field: 'Surface',
-              width: 200,
-            },
-            {
-              label: 'Nombre de logements',
-              field: 'logement',
-              width: 200,
-            },
-            {
-              label: 'Nombre des habitants',
-              field: 'habitant',
               width: 200,
             },
             {
@@ -186,22 +112,13 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
               label: 'coût d\'étude',
               field: 'ce',
             },
-            {
-              label: 'Actoin',
-              field: 'action',
-              sort : 'disabled',
-              width: 50,
-            },
+      
            
           ],
           rows: projets,
         });
 
         setLoading(false);
-
-			} catch (err) {
-				console.log(err);
-			}
   }
 
 
@@ -212,7 +129,6 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
  
     return (
       <div className="p-3">
-        <ToastContainer />
         {
             loading ?
             <div className="d-flex justify-content-center">
@@ -239,23 +155,10 @@ const TableProjIneligible = React.forwardRef((props, ref) => {
             barReverse />
         }
 
-        <Modal show={show} onHide={() => setShow(false)}>
-          <Modal.Header>
-          <Modal.Title>Confirmation</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Are you sure you want move {projet.id} to eligible list!</Modal.Body>
-          <Modal.Footer>
-          <Button variant="danger" onClick={() => setShow(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={() => eligible() }>
-            Save
-          </Button>
-          </Modal.Footer>
-        </Modal>
+      
       </div>
     )
 });
 
-export default TableProjIneligible;
+export default TableTranche;
   
