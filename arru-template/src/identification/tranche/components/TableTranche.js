@@ -17,16 +17,15 @@ const TableTranche = React.forwardRef((props, ref) => {
 
   const fetchProjets = async () => {
 
-
         let projets = [];
         for(const projet of props.projets){
             
           let nomProjet = '';
           for(const q of projet.quartiers){
-            nomProjet = nomProjet + q.nom_fr + ' '
+            nomProjet = nomProjet + q.nom_fr + ' - '
           }  
           projets.push({
-              nom: nomProjet.trim(),
+              nom: nomProjet.slice(0,nomProjet.length - 4),
               quartier:
               <ul className="ml-n4" key={projet.id} style={{"listStyleType":"none"}}>
                 {

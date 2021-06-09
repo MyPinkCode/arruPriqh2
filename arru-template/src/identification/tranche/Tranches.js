@@ -4,6 +4,7 @@ import Print from './components/PrintTranche';
 import axios from 'axios'
 import { Row, Col, Button } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
+import FormTranche from './components/FormTranche'
 
 export default function Tranches() {
 
@@ -39,13 +40,13 @@ export default function Tranches() {
                     <h1 className="h3 mb-3">Gestion des tranches</h1>
                 </Col>
                 <Col>
-                    <button className="btn btn-primary mr-5 float-right" size="primary"><FeatherIcon icon="plus" /></button>
+                    <button className="btn btn-primary float-right" data-toggle="modal" data-target="#ajout" size="primary"><FeatherIcon icon="plus" /></button>
                 </Col>
             </Row>
             
             <Accordion defaultActiveKey="0">
                 { tranches.map((tranche,index) =>(
-                <Card>
+                <Card key={index}>
                 <Accordion.Toggle as={Card.Header} eventKey="1">
                 <Row className="mt-2">
                     <Col>
@@ -55,7 +56,7 @@ export default function Tranches() {
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="1">
                 <Card.Body>
-                    <Print projets={tranche.projets}/>
+                    <Print tranche={tranche}/>
                 </Card.Body>
                 </Accordion.Collapse>
                 </Card>
@@ -63,6 +64,25 @@ export default function Tranches() {
                 }
             </Accordion>
         </div>
+                    <div className="modal fade" id="ajout" tabIndex="-1" role="dialog" aria-hidden="true">
+						<div className="modal-dialog" role="document">
+							<div className="modal-content">
+								<div className="modal-header">
+									<div className="col-12 col-xl-12">
+										<div className="card">
+											<div className="modal-header">
+												<h5 className="modal-title">Ajouter Tranche</h5>
+												<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div className="card-body">
+												<FormTranche />
+											</div>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </main>
     )
 }
