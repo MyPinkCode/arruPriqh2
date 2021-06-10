@@ -198,14 +198,14 @@ const [rolesDefault, setRolesDefault] = React.useState([]);
 						{selectedLabels && <div style={{ marginTop: 20, lineHeight: '25px' }}>
 							<div>{
 									selectedLabels.map((role,index) =>( 
-										<div className="mb-3 row">
+										<div key={index} className="mb-3 row">
 											{ `${role.label} :` }
 											<div className="row">
 											{
 												roles_specifications.filter((el) => {
 													return el.titre === role.label
-												})[0].specification.map((sp) => (
-													<span><input className="col" defaultChecked={checkedSp(sp.titre,sp.id,role.label)} type="radio"
+												})[0].specification.map((sp,i) => (
+													<span key={i}><input className="col" defaultChecked={checkedSp(sp.titre,sp.id,role.label)} type="radio"
 													 onClick={(e) => handleRelations(e,index)} name={role.label} value={sp.id} /> { sp.titre}</span>
 												))
 
@@ -243,14 +243,14 @@ const [rolesDefault, setRolesDefault] = React.useState([]);
 						{selectedLabels && <div style={{ marginTop: 20, lineHeight: '25px' }}>
 							<div>{
 									selectedLabels.map((role,index) =>( 
-										<div className="mb-3 row">
+										<div key={index} className="mb-3 row">
 											{ `${role.label} :` }
 											<div className="row">
 											{
 												roles_specifications.filter((el) => {
 													return el.titre === role.label
-												})[0].specification.map((sp) => (
-													<span><input className="col" type="radio" onClick={(e) => handleRelations(e,index)} 
+												})[0].specification.map((sp,i) => (
+													<span key={i}><input className="col" type="radio" onClick={(e) => handleRelations(e,index)} 
 													name={role.label}  value={sp.id} /> { sp.titre}</span>
 												))
 											}

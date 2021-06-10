@@ -54,7 +54,7 @@ export default function Interface() {
 
 									<tbody>
                                     {interfaces.map((fonctionalite,index) => (
-										<tr>
+										<tr key={index}>
 											<td key={index}>{fonctionalite.titre}</td>
 										
                                         </tr>

@@ -41,7 +41,9 @@ export default function Sidebar(props) {
 					{ user.payload.interfaces.filter((el) => el.titre === "gestion des fonctionalites").length > 0 ?
 					<SidebarItem title="Interfaces" icon="layout" l="/Interfaces" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					: "" } 
-					
+					{ user.payload.interfaces.filter((el) => el.titre === "gestion des fonctionalites").length > 0 ?
+					<SidebarItem title="Tracabilites" icon="search" l="/Traces" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					: "" } 
 						
 					
 					{ user.payload.interfaces.filter((el) => ["gestion des utilisateurs", "gestion des roles", "gestion des groupes", "gestion des fonctionalites"].indexOf(el.titre) > -1).length > 0 ? 
@@ -70,6 +72,12 @@ export default function Sidebar(props) {
 					<SidebarItem title="Budget" icon="dollar-sign" l="/Budget" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Prestataire" icon="dollar-sign" l="/Prestataire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Memoire" icon="dollar-sign" l="/Memoire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					<SidebarItem title="Decompte" icon="dollar-sign" l="/Decompte" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					
+					<li className="sidebar-header">
+						Suivi de Travaux
+					</li>
+					<SidebarItem title="Avancement" icon="trending-up" l="/Avancement" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Decompte" icon="dollar-sign" l="/Decompte" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					
 					<li className="sidebar-header">

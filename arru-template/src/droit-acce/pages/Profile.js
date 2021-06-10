@@ -33,7 +33,7 @@ export default function Profile() {
                             <h5 className="h6 card-title">Mes roles </h5>
                             {
                                 user.payload.roles.map((role,index) => (
-                                    <span st href="#" data-toggle="modal" data-target="#ModalMod" className="badge btn-primary mr-1 my-1">{role.titre}</span>
+                                    <span key={index} st href="#" data-toggle="modal" data-target="#ModalMod" className="badge btn-primary mr-1 my-1">{role.titre}</span>
                                 ))
                             }
                         </div>

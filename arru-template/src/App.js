@@ -1,4 +1,4 @@
-//import ApolloProvider from './ApolloProvider';
+import ApolloProvider from './ApolloProvider';
 import React from 'react'
 import Sidebar from './droit-acce/components/Sidebar'
 import Navbar from './droit-acce/components/Navbar'
@@ -11,6 +11,8 @@ import Specification from './droit-acce/pages/Specification'
 import Settings from './droit-acce/pages/Settings'
 import Profile from './droit-acce/pages/Profile'
 import Login from './droit-acce/pages/Login'
+import Traces from './droit-acce/pages/Traces/Traces'
+
 import Quartiers from './identification/quartier/Quartiers'
 import Projets from './identification/projet/Projets'
 import E404 from './identification/pages/E404'
@@ -25,6 +27,7 @@ import Prestataire from './financement/prestataire/Prestataire'
 import Memoire from './financement/memoire/Memoire'
 import Financement from './financement/financement/Financement'
 import Decompte from './financement/decompte/Decompte'
+import Avancement from './execution physique/tranche/Avancement'
 
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
@@ -43,6 +46,7 @@ function App() {
  
   return (
     
+    <ApolloProvider>
     <AuthProvider>
     <StoreProvider>
     <Router>
@@ -72,6 +76,8 @@ function App() {
             <DynamicRoutes exact path="/Memoire" component={Memoire} authenticated />
             <DynamicRoutes exact path="/Financement/:id" component={Financement} authenticated />
             <DynamicRoutes exact path="/Decompte" component={Decompte} authenticated />
+            <DynamicRoutes exact path="/Avancement" component={Avancement} authenticated />
+            <DynamicRoutes exact path="/Traces" component={Traces} authenticated />
             <DynamicRoutes component={E404} authenticated />
           </Switch>
           <Footer />
@@ -81,7 +87,7 @@ function App() {
     </Router>
     </StoreProvider>
     </AuthProvider>
-    
+    </ApolloProvider>
   );
 }
 
