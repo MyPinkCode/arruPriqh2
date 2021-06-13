@@ -9,11 +9,11 @@ export default function Step3() {
 	console.log(newProjet);
     
     const [quartiers, setQuartiers] = React.useState([]);
-	const [drainage, setDrainage] = React.useState({type: 'drainage des eaux pluviales', quantité: 0, cout: 0});
-	const [voirie, setVoirie] = React.useState({type: 'voirie', quantité: 0, cout: 0});
-	const [assainissement, setAssainissement] = React.useState({type: 'assainissement', quantité: 0, cout: 0});
-	const [eclairage, setEclairage] = React.useState({type: 'eclairage public', quantité: 0, cout: 0});
-	const [eau, setEau] = React.useState({type: 'eau potable', quantité: 0, cout: 0});
+	const [drainage, setDrainage] = React.useState({type: 'drainage des eaux pluviales', quantite: 0, cout: 0});
+	const [voirie, setVoirie] = React.useState({type: 'voirie', quantite: 0, cout: 0});
+	const [assainissement, setAssainissement] = React.useState({type: 'assainissement', quantite: 0, cout: 0});
+	const [eclairage, setEclairage] = React.useState({type: 'eclairage public', quantite: 0, cout: 0});
+	const [eau, setEau] = React.useState({type: 'eau potable', quantite: 0, cout: 0});
 
 	const dispatch = useStoreDispatch();
 
@@ -30,8 +30,8 @@ export default function Step3() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Drainage</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { drainage.quantité= e.target.value * 1; dispatchData();}}/>
+					<input type="number" className="form-control" placeholder="quantite (km)"
+					onChange={(e) => { drainage.quantite= e.target.value * 1; dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
@@ -41,8 +41,8 @@ export default function Step3() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Voirie</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { voirie.quantité= e.target.value * 1;  dispatchData();}}/>
+					<input type="number" className="form-control" placeholder="quantite (km)"
+					onChange={(e) => { voirie.quantite= e.target.value * 1;  dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
@@ -52,8 +52,8 @@ export default function Step3() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Assainissement</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { assainissement.quantité= e.target.value * 1;  dispatchData();}}/>
+					<input type="number" className="form-control" placeholder="quantite (km)"
+					onChange={(e) => { assainissement.quantite= e.target.value * 1;  dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
@@ -64,7 +64,7 @@ export default function Step3() {
                 <label className="col-form-label col-sm-3 text-sm-left">Eclairage Public</label>
                 <div className="col-sm-4">
 					<input type="number" className="form-control" placeholder="p.lumineux"
-					onChange={(e) => { eclairage.quantité= e.target.value * 1; dispatchData();}}/>
+					onChange={(e) => { eclairage.quantite= e.target.value * 1; dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
@@ -74,8 +74,8 @@ export default function Step3() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eau potable</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)"
-					onChange={(e) => { eau.quantité= e.target.value * 1;  dispatchData();}}/>
+					<input type="number" className="form-control" placeholder="quantite (km)"
+					onChange={(e) => { eau.quantite= e.target.value * 1;  dispatchData();}}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"

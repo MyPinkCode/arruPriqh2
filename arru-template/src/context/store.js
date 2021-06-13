@@ -19,28 +19,28 @@ if(!gouvernorat){
 const loadValues = () => {
     const drainage = {
         type: "Drainage", 
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].quantité : '',
+        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].quantite : '',
         cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].cout : ''}
     
     const eau = {
         type: "Eau potable",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].quantité : '',
+        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].quantite : '',
         cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].cout : ''}
 
     const assainissement = {
         type: "Assainissement",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].quantité : '',
+        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].quantite : '',
         cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].cout : ''
     }
 
     const eclairage = {
         type: "Eclairage public",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].quantité : '',
+        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].quantite : '',
         cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].cout : ''}
     
     const voirie = {
         type: "Voirie",
-        quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].quantité : '',
+        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].quantite : '',
         cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].cout : ''}
     
     const etude = {

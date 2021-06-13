@@ -6,18 +6,16 @@ import FeatherIcon from 'feather-icons-react';
 import "./map.css";
 import MapFormUpdate from './MapFormUpdate';
 import { Spinner } from 'react-bootstrap'
+import * as turf from '@turf/turf'
 
 const {BaseLayer} = LayersControl;
 
 export default function Map({ quartiers, loading, setLoading }) {
-
-  console.log(quartiers);
   
   const [show, setShow] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
   const [quartier, setQuartier] = React.useState({});
   
-
   const deleteQuartier = async (id) => {
     console.log(id);
 		try {
@@ -46,7 +44,6 @@ export default function Map({ quartiers, loading, setLoading }) {
     }
 
     return polys;
-    
   }
 
 

@@ -5,11 +5,43 @@ import axios from 'axios'
 import { Row, Col, Button } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
 import FormTranche from './components/FormTranche'
+import { gql, useSubscription } from '@apollo/client'
+
+const TRANCHES = gql`
+subscription tranches {
+  tranches {
+    id
+    numero
+    projets{
+      id
+      code
+      eligible
+      nbr_quartiers
+      surface_totale
+      surface_urbanisee_totale
+      nombre_logements_totale
+      nombre_habitants_totale
+      infrastructures{
+        id
+        code
+        type
+        quantite
+        cout
+      }
+    }
+  }
+}`
 
 export default function Tranches() {
 
     const [tranches,setTranches] = React.useState([]);
 
+    const { data: tranchesInfo, error: messageError } = useSubscription(
+		TRANCHES
+	)
+
+    console.log(tranchesInfo)
+    
     const fetchTranches= async () => {
 		try {
 			const url ='http://localhost:4000/api/v1/tranches/';
@@ -31,6 +63,12 @@ export default function Tranches() {
     React.useEffect(() => {
         fetchTranches();
     },[])
+
+    React.useEffect(() => {
+        if(tranchesInfo){
+            setTranches(tranchesInfo.tranches);
+        }
+    },[tranchesInfo]);
 
     return (
         <main className="content">

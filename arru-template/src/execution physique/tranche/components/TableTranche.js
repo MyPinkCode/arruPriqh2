@@ -16,7 +16,7 @@ const TableTranche = React.forwardRef((props, ref) => {
   const [show, setShow] = React.useState(false);
   
   const calculAvancement = (infra) => {
-    return  (infra.progres.cout * 100) / infra.quantité;
+    return  (infra.progres.cout * 100) / infra.quantite;
   }
 
   const fetchProjets = async () => {
@@ -54,15 +54,15 @@ const TableTranche = React.forwardRef((props, ref) => {
               width: 200,
             },
             {
-              label: 'quantité drainage',
+              label: 'quantite drainage',
               field: 'qd',
             },
             {
-              label: 'quantité voirie',
+              label: 'quantite voirie',
               field: 'qv',
             },
             {
-              label: 'quantité eau potable',
+              label: 'quantite eau potable',
               field: 'qep',
             },
             {
@@ -70,7 +70,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               field: 'npl',
             },
             {
-              label: 'quantité assainissement',
+              label: 'quantite assainissement',
               field: 'qa',
             },
             {

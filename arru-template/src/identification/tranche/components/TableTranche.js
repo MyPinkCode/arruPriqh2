@@ -6,6 +6,8 @@ import FeatherIcon from 'feather-icons-react';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap'
 
+
+
 const TableTranche = React.forwardRef((props, ref) => {
 
   const [datatable, setDatatable] = React.useState({});
@@ -36,18 +38,18 @@ const TableTranche = React.forwardRef((props, ref) => {
               </ul>,
               Nombre: projet.nbr_quartiers,
               Surfaces: projet.surface_totale,
-              Surface: projet.surface_urbanisée_totale,
+              Surface: projet.surface_urbanisee_totale,
               logement: projet.nombre_logements_totale,
               habitant: projet.nombre_habitants_totale,
-              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantité,
+              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantite,
               cd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].cout,
-              qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantité,
+              qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantite,
               cv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].cout,
-              qep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].quantité,
+              qep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].quantite,
               cep: projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0].cout,
-              npl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].quantité,
+              npl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].quantite,
               cpl: projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0].cout,
-              qa: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].quantité,
+              qa: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].quantite,
               ca: projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0].cout,
               be: projet.bureau_etude,
               ce: projet.cout_etude,
@@ -64,7 +66,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               width: 200,
             },
             {
-              label: 'quantité drainage',
+              label: 'quantite drainage',
               field: 'qd',
             },
             {
@@ -72,7 +74,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               field: 'cd',
             },
             {
-              label: 'quantité voirie',
+              label: 'quantite voirie',
               field: 'qv',
             },
             {
@@ -80,7 +82,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               field: 'cv',
             },
             {
-              label: 'quantité eau potable',
+              label: 'quantite eau potable',
               field: 'qep',
             },
             {
@@ -96,7 +98,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               field: 'cpl',
             },
             {
-              label: 'quantité assainissement',
+              label: 'quantite assainissement',
               field: 'qa',
             },
             {

@@ -54,7 +54,7 @@ export default function MapFormAdd({ quartier }) {
                         <div className="mb-3 row">
                             <label className="col-form-label col-sm-3 text-sm-left">Nom en francais</label>
                             <div className="col-sm-9">
-                                <input type="text" className="form-control" placeholder="Nombre quartiers" defaultValue={quartier.nom_fr}
+                                <input type="text" className="form-control" placeholder="Nom en francais" defaultValue={quartier.nom_fr}
                                 onChange={(e) => setQuartier({...quartierEdit, nom_fr: e.target.value})}/>
                             </div>
                         </div>

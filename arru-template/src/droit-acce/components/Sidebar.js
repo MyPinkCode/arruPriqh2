@@ -63,7 +63,8 @@ export default function Sidebar(props) {
 					{ user.payload.interfaces.filter((el) => el.titre === "gestion des communes").length > 0 ? 
 					<SidebarItem title="Communes" icon="list" l="/communes" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					: "" }
-
+					<SidebarItem title="Tranches" icon="pie-chart" l="/Tranches" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					
 					<li className="sidebar-header">
 						Financement
 					</li>
@@ -72,7 +73,7 @@ export default function Sidebar(props) {
 					<SidebarItem title="Budget" icon="dollar-sign" l="/Budget" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Prestataire" icon="dollar-sign" l="/Prestataire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Memoire" icon="dollar-sign" l="/Memoire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Decompte" icon="dollar-sign" l="/Decompte" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+				
 					
 					<li className="sidebar-header">
 						Suivi de Travaux

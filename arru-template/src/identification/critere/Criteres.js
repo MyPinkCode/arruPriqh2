@@ -4,12 +4,32 @@ import Critere from './components/Critere'
 import axios from 'axios'
 import { useStoreState } from './../../context/store';
 import LoadingBar from 'react-top-loading-bar';
+import { gql, useSubscription } from '@apollo/client'
+
+const CRITERES = gql`
+subscription criteres {
+    criteres{
+        id
+        surface_totale
+        surface_urbanisee_totale
+        nombre_logements_totale
+        nombre_habitants_totale
+        gouvernorat{code}
+  }
+}`
 
 export default function Criteres() {
     const {gouvernorat} = useStoreState();
 
     const [fiche, setFiche] = React.useState({});
     const [progress, setProgress] = React.useState(0);
+
+    const { data: criteres, error: messageError } = useSubscription(
+		CRITERES
+	)
+
+    console.log(criteres);
+    
     const fetchCriteres = async (gouvernorat) => {
 		try {
 			const url =`http://localhost:4000/api/v1/criteres/${gouvernorat.slice(0,3).toUpperCase()}`;
@@ -27,6 +47,16 @@ export default function Criteres() {
                 return {};
 			}
 	}
+
+    React.useEffect(() => {
+        if(criteres){
+            criteres.criteres.map((critere) => {
+                if(critere.gouvernorat.code === gouvernorat.slice(0,3).toUpperCase()){
+                    setFiche(critere);
+                }
+            });
+        }
+    },[criteres]);
 
     React.useEffect(() => {
         setProgress(100);
@@ -54,7 +84,7 @@ export default function Criteres() {
                        <Critere title="Nombre de logements" id={fiche.id} critere={fiche.nombre_logements_totale}/>
                        <Critere title="Nombre d'habitant" id={fiche.id} critere={fiche.nombre_habitants_totale}/>
                        <Critere title="Surface totale (hectares)" id={fiche.id} critere={fiche.surface_totale}/>
-                       <Critere title="Surface urbanisée totale (hectares)" id={fiche.id} critere={fiche.surface_urbanisée_totale}/>
+                       <Critere title="Surface urbanisée totale (hectares)" id={fiche.id} critere={fiche.surface_urbanisee_totale}/>
 					</div>
 				</div>
             </div>  </div>

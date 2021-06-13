@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import {ToastContainer, toast} from 'react-toastify';
+import {ToastContainer as TContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStoreState } from '../../../context/store';
 
@@ -12,28 +12,28 @@ export default function FormProjetUpdate() {
 
         const drainage = {
             type: "drainage des eaux pluviales", 
-            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "drainage des eaux pluviales")[0].quantité : '',
+            quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "drainage des eaux pluviales")[0].quantite : '',
             cout: projet ? projet.infrastructures.filter((infra) => infra.type === "drainage des eaux pluviales")[0].cout : ''}
         
         const eau = {
             type: "eau potable",
-            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "eau potable")[0].quantité : '',
+            quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "eau potable")[0].quantite : '',
             cout: projet ? projet.infrastructures.filter((infra) => infra.type === "eau potable")[0].cout : ''}
 
         const assainissement = {
             type: "assainissement",
-            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "assainissement")[0].quantité : '',
+            quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "assainissement")[0].quantite : '',
             cout: projet ? projet.infrastructures.filter((infra) => infra.type === "assainissement")[0].cout : ''
         }
 
         const eclairage = {
             type: "eclairage public",
-            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "eclairage public")[0].quantité : '',
+            quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "eclairage public")[0].quantite : '',
             cout: projet ? projet.infrastructures.filter((infra) => infra.type === "eclairage public")[0].cout : ''}
         
         const voirie = {
             type: "voirie",
-            quantité: projet ? projet.infrastructures.filter((infra) => infra.type === "voirie")[0].quantité : '',
+            quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "voirie")[0].quantite : '',
             cout: projet ? projet.infrastructures.filter((infra) => infra.type === "voirie")[0].cout : ''}
         
         const etude = {
@@ -55,7 +55,6 @@ export default function FormProjetUpdate() {
 
     const [etude, setEtude] = React.useState(loadValues().etude);
 
-    console.log(etude,loadValues())
     const updateProjet = async() => {
 
         console.log({projet: {...etude}, infrastructures: [drainage, eau, assainissement, eclairage, voirie]});
@@ -68,14 +67,14 @@ export default function FormProjetUpdate() {
 				data: {projet: {...etude}, infrastructures: [drainage, eau, assainissement, eclairage, voirie]}
 			});
 
-			toast.success('Success', {
+			 toast.success('Success', {
 				position: 'top-right',
-				autoClose: 5000,
+				autoClose: 3000,
 				draggable: false
 			});
 
-			window.location.replace('/Projets');
-
+            window.location.replace('/Projets');
+            
 		}catch(err){
 			console.log(err.response.data.message);
 			
@@ -101,12 +100,12 @@ export default function FormProjetUpdate() {
 
     return (
         <div>
-            <ToastContainer />
+            <TContainer />
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Drainage</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => drainage.quantité= e.target.value * 1}
-                    defaultValue={drainage.quantité}/>
+					<input type="number" className="form-control" placeholder="quantite (km)" onChange={(e) => drainage.quantite= e.target.value * 1}
+                    defaultValue={drainage.quantite}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => drainage.cout= e.target.value * 1}
@@ -116,8 +115,8 @@ export default function FormProjetUpdate() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Voirie</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => voirie.quantité= e.target.value * 1}
-                    defaultValue={voirie.quantité}/>
+					<input type="number" className="form-control" placeholder="quantite (km)" onChange={(e) => voirie.quantite= e.target.value * 1}
+                    defaultValue={voirie.quantite}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => voirie.cout= e.target.value * 1}
@@ -127,8 +126,8 @@ export default function FormProjetUpdate() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Assainissement</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => assainissement.quantité= e.target.value * 1}
-                    defaultValue={assainissement.quantité}/>
+					<input type="number" className="form-control" placeholder="quantite (km)" onChange={(e) => assainissement.quantite= e.target.value * 1}
+                    defaultValue={assainissement.quantite}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => assainissement.cout= e.target.value * 1}
@@ -138,8 +137,8 @@ export default function FormProjetUpdate() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eclairage Public</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="p.lumineux (km)" onChange={(e) => eclairage.quantité= e.target.value * 1}
-                    defaultValue={eclairage.quantité}/>
+					<input type="number" className="form-control" placeholder="p.lumineux (km)" onChange={(e) => eclairage.quantite= e.target.value * 1}
+                    defaultValue={eclairage.quantite}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => eclairage.cout= e.target.value * 1}
@@ -149,8 +148,8 @@ export default function FormProjetUpdate() {
             <div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Eau potable</label>
                 <div className="col-sm-4">
-					<input type="number" className="form-control" placeholder="quantité (km)" onChange={(e) => eau.quantité= e.target.value * 1}
-                    defaultValue={eau.quantité}/>
+					<input type="number" className="form-control" placeholder="quantite (km)" onChange={(e) => eau.quantite= e.target.value * 1}
+                    defaultValue={eau.quantite}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)" onChange={(e) => eau.bureaucout= e.target.value * 1}
@@ -170,7 +169,7 @@ export default function FormProjetUpdate() {
             </div>
             <div className="mb-3 row">
 				<div className="col-sm-9">
-					<span onClick={() => updateProjet()}  className="btn btn-primary">Submit</span>
+					<span onClick={(e) => updateProjet()}  className="btn btn-primary">Submit</span>
 				</div>
 			</div>
         </div>

@@ -16,7 +16,7 @@ export default function Critere({title,critere,id}){
 		if(title === "Nombre de logements"){ data = { nombre_logements_totale: critereEdit } }
 		if(title === "Nombre d'habitant"){ data = { nombre_habitants_totale: critereEdit } }
 		if(title === "Surface totale (hectares)"){ data = { surface_totale: critereEdit } }
-		if(title === "Surface urbanisée totale (hectares)"){ data = { surface_urbanisée_totale: critereEdit } }
+		if(title === "Surface urbanisée totale (hectares)"){ data = { surface_urbanisee_totale: critereEdit } }
 
 		try{
 			const url = `http://localhost:4000/api/v1/criteres/${id}`;

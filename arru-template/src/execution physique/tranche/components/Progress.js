@@ -7,7 +7,7 @@ export default function Progress({ infra }) {
    // setTaux(calculAvancement(infra));
 
     const calculAvancement = (infra) => {
-        return  (infra.progres.cout * 100) / infra.quantité;
+        return  (infra.progres.cout * 100) / infra.quantite;
     }
 
     React.useEffect(() => {
@@ -15,7 +15,7 @@ export default function Progress({ infra }) {
     });
     
   return (
-<OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{`${infra.progres.cout}/${infra.quantité}`}</Tooltip>}>
+<OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{`${infra.progres.cout}/${infra.quantite}`}</Tooltip>}>
 <ProgressBar>
         <ProgressBar  animated variant="success" label={`${Math.round(taux* 100) / 100}%`} now={Math.round(taux* 100) / 100}/>
         <ProgressBar  animated variant="danger" label={`${Math.round((100 - taux)* 100) / 100}%`} now={Math.round((100 - taux)* 100) / 100} />

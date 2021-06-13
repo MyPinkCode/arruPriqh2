@@ -9,6 +9,45 @@ import MapFormAdd from './components/MapFormAdd'
 
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import LoadingBar from 'react-top-loading-bar';
+import { gql, useSubscription } from '@apollo/client'
+
+const QUARTIERS = gql`
+subscription quartiers {
+  quartiers{
+    id
+    code
+    nom_fr
+    nom_ar
+    center{lat lng}
+    latlngs{lat lng}
+    surface
+  }
+}`
+
+const GOUVERNORATS = gql`
+subscription gouvernorats {
+    gouvernorats{
+    id
+    code
+    nom_fr
+    nom_ar
+    communes{
+      id
+      code
+      nom_fr
+      nom_ar
+      quartiers{
+        id
+        code
+        nom_fr
+        nom_ar
+        center{lat lng}
+        latlngs{lat lng}
+        surface
+      }
+    }
+  }
+}`
 
 export default function Quartiers() {
     const animatedComponents = makeAnimated();
@@ -21,6 +60,16 @@ export default function Quartiers() {
     const [quartiers, setQuartiers] = React.useState([]);
     const [progress, setProgress] = React.useState(0);
     const [loading, setLoading] = React.useState(true);
+
+    const { data: quartiersINFO, error: messageError } = useSubscription(
+		QUARTIERS
+	)
+
+    const { data: gouvernoratsINFO, error: messageError1 } = useSubscription(
+		GOUVERNORATS
+	)
+
+    console.log("gouvernoratsINFO",gouvernoratsINFO);
 
     const handlesChangeGouvernorat = (e) => {
         setLoading(true);
@@ -95,8 +144,24 @@ export default function Quartiers() {
 			}
 	}
 
-    
+    React.useEffect(() => {
+        if(quartiersINFO){
+            console.log(quartiersINFO);
+            setQuartiers(quartiersINFO.quartiers);
+        }
+        
+    },[quartiersINFO]);
 
+    React.useEffect(() => {
+        if(gouvernoratsINFO){
+            let gouvernorats_options = [];
+			for(const gouvernorat of gouvernoratsINFO.gouvernorats){
+				let obj = { value: gouvernorat, label: gouvernorat.nom_fr+" - "+ gouvernorat.nom_ar }
+				gouvernorats_options.push(obj);
+			}
+			setGouvernorats(gouvernorats_options);
+        }
+    },[gouvernoratsINFO]);
 
     React.useEffect(() => {
         setProgress(20);

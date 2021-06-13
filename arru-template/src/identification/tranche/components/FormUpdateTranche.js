@@ -77,7 +77,7 @@ export default function FormUpdateTranche(props) {
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Numero</label>
                 <div className="col-sm-9">
-					<input type="text" className="form-control" placeholder="Nombre quartiers" defaultValue={tranche.numero}
+					<input type="text" className="form-control" placeholder="Numero" defaultValue={tranche.numero}
 					onChange={(e) => setTranche({...tranche, numero: e.target.value * 1})}/>
 				</div>
 			</div>

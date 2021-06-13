@@ -37,7 +37,7 @@ const wsLink = new WebSocketLink({
       Authorization: `Bearer ${localStorage.getItem('tokenARRU')}`,
     },
   },
-})
+});
 
 const splitLink = split(
   ({ query }) => {

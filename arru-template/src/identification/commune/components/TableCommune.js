@@ -9,6 +9,18 @@ import axios from 'axios';
 import { useStoreDispatch } from '../../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap'
+import { gql, useSubscription } from '@apollo/client'
+
+const COMMUNES = gql`
+subscription communes {
+  communes {
+    id
+    nom_fr
+    nom_ar
+    code
+    gouvernorat{id nom_fr nom_ar}
+  }
+}`
 
 const TableCommune = React.forwardRef((props, ref) => {
 
@@ -17,6 +29,10 @@ const TableCommune = React.forwardRef((props, ref) => {
   const dispatch = useStoreDispatch();
   const [commune, setCommune] = React.useState({});
   const [loading, setLoading] = React.useState(true);
+
+  const { data: communesINFO, error: messageError } = useSubscription(
+		COMMUNES
+	)
 
   const deleteCommune = async () => {
 		try {
@@ -116,6 +132,60 @@ const TableCommune = React.forwardRef((props, ref) => {
 				console.log(err.response.data.message);
 			}
   }
+
+  React.useEffect(() => {
+    if(communesINFO) {
+      let communes = [];
+        for(const commune of communesINFO.communes){
+          communes.push({
+              code: commune.code,
+              gouvernorat: commune.gouvernorat.nom_fr,
+              nom_fr: commune.nom_fr,
+              nom_ar: commune.nom_ar,
+              modifier :<span onClick={() => dispatch({ type:'communeEdit', payload: commune })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
+              supprimer : <span onClick={() => { setCommune(commune); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+          });
+        }
+
+        setDatatable({
+          columns: [
+            {
+              label: 'Code',
+              field: 'code',
+              attributes: {
+                'aria-controls': 'DataTable',
+                'aria-label': 'code',
+              },
+            },
+            {
+              label: 'Gouvernorat',
+              field: 'gouvernorat',
+            },
+            {
+              label: 'Nom en francais',
+              field: 'nom_fr',
+            },
+            {
+              label: 'Nom en arabe',
+              field: 'nom_ar',
+            },
+            {
+                label: 'Modifier',
+                field: 'modifier',
+                sort : 'disabled',
+                width: 100,
+            },
+            {
+                label: 'Supprimer',
+                field: 'supprimer',
+                sort : 'disabled',
+                width: 100,
+            },
+          ],
+          rows: communes,
+        });
+    }
+  },[communesINFO]);
 
   React.useEffect(() => {
     fetchCommunes();

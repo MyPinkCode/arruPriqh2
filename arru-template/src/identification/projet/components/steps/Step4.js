@@ -25,7 +25,7 @@ export default function Step4() {
 
 			toast.success('Success', {
 				position: 'top-right',
-				autoClose: 5000,
+				autoClose: 3000,
 				draggable: false
 			});
 
@@ -49,7 +49,7 @@ export default function Step4() {
                 <label className="col-form-label col-sm-3 text-sm-left">Etude</label>
                 <div className="col-sm-4">
 					<input type="text" className="form-control" placeholder="Bureau"
-					onChange={(e) => { etude.bureau_etude= e.target.value * 1;  }}/>
+					onChange={(e) => { etude.bureau_etude= e.target.value;  }}/>
 				</div>
                 <div className="col-sm-5">
 					<input type="number" className="form-control" placeholder="cout (mdt)"
