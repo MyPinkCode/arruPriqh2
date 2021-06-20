@@ -32,7 +32,7 @@ export default function Navbar(props) {
                                 <span className="indicator">4</span>
                             </div>
                         </a>
-                        <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0" aria-labelledby="alertsDropdown">
+                        <div className="dropdown-menu dropdown-menu-lg dropdown-menu-left py-0" aria-labelledby="alertsDropdown">
                             <div className="dropdown-menu-header">
                                 4 New Notifications
                             </div>

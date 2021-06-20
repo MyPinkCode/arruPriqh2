@@ -33,7 +33,7 @@ export default function FormTranche() {
 			setProjets(projet_options);
 
 		} catch (err) {
-			console.log(err.response.data.message);
+			console.log(err);
 		}
 	}
 

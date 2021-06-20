@@ -5,8 +5,23 @@ import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import axios from 'axios';
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { gql, useSubscription } from '@apollo/client'
+
+const BAILLEURS = gql`
+subscription bailleurs {
+  bailleurs{
+    id
+    nom
+    image
+  }
+}`
 
 export default function Beilleurs() {
+
+    const { data: bailleurs, error: messageError } = useSubscription(
+		BAILLEURS
+	)
+
     const [selectedImg, setSelectedImg]=React.useState("img/photos/deflogo.png");
 
     function handleChange(event) {
@@ -74,6 +89,13 @@ export default function Beilleurs() {
     React.useEffect(() => {
         fetchBailleurs();
     },[]);
+
+    React.useEffect(() => {
+        if(bailleurs){
+            console.log(bailleurs.bailleurs);
+            setTab(bailleurs.bailleurs);
+        }
+    },[bailleurs]);
 
     return (
         <main className="content">

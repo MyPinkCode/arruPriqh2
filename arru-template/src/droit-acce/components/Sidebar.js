@@ -69,9 +69,9 @@ export default function Sidebar(props) {
 						Financement
 					</li>
 					<SidebarItem title="Beilleurs de fond" icon="users" l="/beilleurs" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Tranches" icon="pie-chart" l="/Tranches" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Budget" icon="dollar-sign" l="/Budget" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					<SidebarItem title="Prestataire" icon="dollar-sign" l="/Prestataire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
+					
+					
+					
 					<SidebarItem title="Memoire" icon="dollar-sign" l="/Memoire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 				
 					
@@ -80,7 +80,7 @@ export default function Sidebar(props) {
 					</li>
 					<SidebarItem title="Avancement" icon="trending-up" l="/Avancement" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<SidebarItem title="Decompte" icon="dollar-sign" l="/Decompte" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
-					
+					<SidebarItem title="Prestataire" icon="dollar-sign" l="/Prestataire" selecteditem={selectedItem} setselecteditem={setSelectedItem} />
 					<li className="sidebar-header">
 						profile
 					

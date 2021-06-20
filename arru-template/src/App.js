@@ -29,6 +29,8 @@ import Financement from './financement/financement/Financement'
 import Decompte from './financement/decompte/Decompte'
 import Avancement from './execution physique/tranche/Avancement'
 
+import Avenant from './execution physique/avenant/Avenant'
+
 import {BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AuthProvider } from './context/auth';
 import { StoreProvider } from './context/store';
@@ -78,6 +80,7 @@ function App() {
             <DynamicRoutes exact path="/Decompte" component={Decompte} authenticated />
             <DynamicRoutes exact path="/Avancement" component={Avancement} authenticated />
             <DynamicRoutes exact path="/Traces" component={Traces} authenticated />
+            <DynamicRoutes exact path="/Avenant" component={Avenant} authenticated />
             <DynamicRoutes component={E404} authenticated />
           </Switch>
           <Footer />

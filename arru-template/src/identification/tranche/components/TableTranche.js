@@ -25,9 +25,9 @@ const TableTranche = React.forwardRef((props, ref) => {
           let nomProjet = '';
           for(const q of projet.quartiers){
             nomProjet = nomProjet + q.nom_fr + ' - '
-          }  
+          }
           projets.push({
-              nom: nomProjet.slice(0,nomProjet.length - 4),
+              nom: nomProjet.slice(0,nomProjet.length - 3),
               quartier:
               <ul className="ml-n4" key={projet.id} style={{"listStyleType":"none"}}>
                 {

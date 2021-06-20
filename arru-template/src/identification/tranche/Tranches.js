@@ -38,9 +38,9 @@ export default function Tranches() {
 
     const { data: tranchesInfo, error: messageError } = useSubscription(
 		TRANCHES
-	)
+	);
 
-    console.log(tranchesInfo)
+    console.log(tranchesInfo);
     
     const fetchTranches= async () => {
 		try {

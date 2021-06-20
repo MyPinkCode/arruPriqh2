@@ -10,8 +10,36 @@ import { useStoreDispatch } from '../../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+import { gql, useSubscription } from '@apollo/client'
+
+const MEMOIRES = gql`
+subscription memoires {
+  memoires{
+    id
+    projet_id
+    htva
+    tva
+    gestion_frais_tva
+    frais_gestion
+    montant_exonere
+    timbre_fiscale
+    projet{code}
+    financements{
+      id
+      montant
+      bailleur_fond{
+        id
+        nom
+      }
+    }
+  }
+}`
 
 const TableMemoire = React.forwardRef((props, ref) => {
+
+  const { data: memoires, error: messageError } = useSubscription(
+		MEMOIRES
+	)
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -129,6 +157,69 @@ const TableMemoire = React.forwardRef((props, ref) => {
   React.useEffect(() => {
     fetchMemoires();
   },[]);
+
+  React.useEffect(() => {
+    if(memoires){
+      let memoiresTab = [];
+      for(const memoire of memoires.memoires){
+        memoiresTab.push({
+              projet: <Link to={`/Financement/${memoire.id}`}>{memoire.projet.code}</Link>,
+              htva: memoire.htva,
+              montant_exonere: memoire.montant_exonere,
+              frais_gestion: memoire.frais_gestion,
+              tva: memoire.tva,
+              gestion_frais_tva: memoire.gestion_frais_tva,
+              timbre_fiscale: memoire.timbre_fiscale,
+              modifier :  <span onClick={() => dispatch({ type:'memoireEdit', payload: memoire })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
+              supprimer : <span onClick={() => { setMemoire(memoire); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+          });
+      }
+
+      setDatatable({
+        columns: [
+          {
+            label: 'Projet',
+            field: 'projet',
+          },
+          {
+            label: 'HTVA',
+            field: 'htva',
+          },
+          {
+            label: 'Montant exonéré',
+            field: 'montant_exonere',
+          },
+          {
+            label: 'TVA',
+            field: 'tva',
+          },
+          {
+            label: 'Gestion Frais TVA',
+            field: 'gestion_frais_tva',
+          },
+          {
+            label: 'Frais Gestion',
+            field: 'frais_gestion',
+          },
+          {
+            label: 'Timbre Fiscale',
+            field: 'timbre_fiscale',
+          },
+          {
+              label: 'Modifier',
+              field: 'modifier',
+              sort : 'disabled',
+          },
+          {
+              label: 'Supprimer',
+              field: 'supprimer',
+              sort : 'disabled',
+          },
+        ],
+        rows: memoiresTab,
+      });
+    }
+  },[memoires]);
 
     return (
       <>

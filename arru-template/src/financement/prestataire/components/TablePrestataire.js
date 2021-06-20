@@ -9,8 +9,22 @@ import axios from 'axios';
 import { useStoreDispatch } from '../../../context/store';
 import { Container, Row, Col, Modal, Card, Button } from 'react-bootstrap';
 import { Spinner } from 'react-bootstrap'
+import { gql, useSubscription } from '@apollo/client'
+
+const PRESTATAIRES = gql`
+subscription prestataires {
+  prestataires{
+    id
+    nom
+    abreviation
+  }
+}`
 
 const TablePrestataire = React.forwardRef((props, ref) => {
+
+  const { data: prestataires, error: messageError } = useSubscription(
+		PRESTATAIRES
+	)
 
   const [datatable, setDatatable] = React.useState({});
   const [show, setShow] = React.useState(false);
@@ -105,6 +119,45 @@ const TablePrestataire = React.forwardRef((props, ref) => {
     fetchPrestataires();
   },[]);
 
+  React.useEffect(() => {
+    if(prestataires){
+      let prestatairesInfo = [];
+      for(const prestataire of prestataires.prestataires){
+        prestatairesInfo.push({
+              abreviation: prestataire.abreviation,
+              nom: prestataire.nom,
+              modifier :<span onClick={() => dispatch({ type:'prestataireEdit', payload: prestataire })} data-toggle="modal" data-target="#modif"><FeatherIcon icon="edit-2" /></span>,
+              supprimer : <span onClick={() => { setPrestataire(prestataire); setShow(true); }}><FeatherIcon icon="trash-2" /></span>,
+          });
+      }
+
+      setDatatable({
+        columns: [
+          {
+            label: 'Nom',
+            field: 'nom',
+          },
+          {
+            label: 'Abreviation',
+            field: 'abreviation',
+          },
+          {
+              label: 'Modifier',
+              field: 'modifier',
+              sort : 'disabled',
+              
+          },
+          {
+              label: 'Supprimer',
+              field: 'supprimer',
+              sort : 'disabled',
+              
+          },
+        ],
+        rows: prestatairesInfo,
+      });
+    }
+  },[prestataires]);
 
     return (
       <>

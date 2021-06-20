@@ -9,27 +9,38 @@ import { Table } from 'react-bootstrap';
 
 const UTILISATEURS = gql`
 subscription utilisateurs {
-	utilisateurs{
-    	nom, prenom, email, roles{titre}
-  	}
+  utilisateurs{
+    nom
+    prenom
+	email
+    telephone
+    roles{role{titre}}
+  }
 }`
 
 export default function Dashboard() {
 	const [users,setUsers]= React.useState([]);
 
 	const [userEdit, setUserEdit] = React.useState({});
-	/*const { data: utilisateurs, error: messageError } = useSubscription(
+
+	const { data: utilisateurs, error: messageError } = useSubscription(
 		UTILISATEURS
-	  )*/
+	)
 	
 
-	  //console.log('messageError', typeof(utilisateurs['utilisateurs']));
+	//console.log(utilisateurs.utilisateurs);
 	  //console.log('messageError', messageError);
 	
 	React.useEffect(() => {
 		fetchUsers();
-	},[])
+	},[]);
 
+
+	React.useEffect(() => {
+		if(utilisateurs !== undefined){
+			setUsers(utilisateurs.utilisateurs);
+		}
+	},[utilisateurs]);
 	  
 	const fetchUsers = async (e) => {
 		try {
@@ -115,8 +126,8 @@ export default function Dashboard() {
 									<thead>
 										<tr>
 											<th style={{"width":"13%"}}>Nom</th>
-											<th style={{"width":"13%"}}>Adresse</th>
-											<th style={{"width":"13%"}}>telephone</th>
+											<th style={{"width":"13%"}}>Email</th>
+											<th style={{"width":"13%"}}>Telephone</th>
 											<th style={{"width":"13%"}}>Role</th>
 											<th style={{"width":"10%"}}><span data-toggle="modal" data-target="#defaultModalPrimary" style={{ "cursor": "pointer" }}><FeatherIcon icon="user-plus"/></span></th>
 										</tr>
@@ -130,7 +141,7 @@ export default function Dashboard() {
 												<td>{utilisateur.telephone}</td>
 												<td><ul className="px-0">{utilisateur.roles.map((role, index) => (
 														
-														<li style={{ listStyleType: "none" }} key={index}>{role.titre}</li>
+														<li style={{ listStyleType: "none" }} key={index}>{role.role.titre}</li>
 													
 													))}</ul> </td>
 												<td className="table-action">

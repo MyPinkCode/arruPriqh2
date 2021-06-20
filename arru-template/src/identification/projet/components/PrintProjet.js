@@ -36,7 +36,7 @@ export default function PrintProjet() {
           const url = `http://localhost:4000/api/v1/criteres/test_eligible`;
           const res = await axios({
             headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
-              method: 'put',
+              method: 'get',
               url,
           });
     
