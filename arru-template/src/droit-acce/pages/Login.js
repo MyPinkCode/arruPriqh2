@@ -47,7 +47,7 @@ export default function Login() {
 			
 			dispatch({ type:'LOGIN', payload: res.data.token });
 			
-			window.location.replace('/Projets');
+			window.location.replace('/');
 			
 			} catch (err) {
 				setLoading(false);

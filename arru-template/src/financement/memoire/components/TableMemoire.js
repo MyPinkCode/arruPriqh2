@@ -37,6 +37,7 @@ subscription memoires {
 
 const TableMemoire = React.forwardRef((props, ref) => {
 
+
   const { data: memoires, error: messageError } = useSubscription(
 		MEMOIRES
 	)

@@ -41,7 +41,7 @@ export default function RoleForm({ role }) {
 	const updateRole = async () => {
 
 		const data = { titre, relations:{fonctionalites: selectedFonctionalites, interfaces: selectedInterfaces} }
-		console.log(data);
+		
 		try{
 			const url = `http://localhost:4000/api/v1/roles/${role.id}`;
 			const res = await axios({
@@ -55,7 +55,7 @@ export default function RoleForm({ role }) {
 			window.location.replace('/Roles');
 
 		}catch(err){
-			console.log(err.response);
+			console.log(err);
 		}
 	}
 

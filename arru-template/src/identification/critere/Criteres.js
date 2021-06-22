@@ -2,6 +2,7 @@ import React from 'react'
 import Carte from './components/Carte'
 import Critere from './components/Critere'
 import axios from 'axios'
+import "./styleCarte.css"
 import { useStoreState } from './../../context/store';
 import LoadingBar from 'react-top-loading-bar';
 import { gql, useSubscription } from '@apollo/client'

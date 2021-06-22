@@ -13,11 +13,7 @@ const TableTranche = React.forwardRef((props, ref) => {
   const [loading, setLoading] = React.useState(true);
 
   const [projet, setProjet] = React.useState({});
-  const [show, setShow] = React.useState(false);
   
-  const calculAvancement = (infra) => {
-    return  (infra.progres.cout * 100) / infra.quantite;
-  }
 
   const fetchProjets = async () => {
 
@@ -36,7 +32,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               qep: <Progress  infra={projet.infrastructures.filter((infra)=> infra.type === "eau potable")[0]} />,
               npl: <Progress  infra={projet.infrastructures.filter((infra)=> infra.type === "eclairage public")[0]} />,
               qa: <Progress  infra={projet.infrastructures.filter((infra)=> infra.type === "assainissement")[0]} />,
-              action : <span onClick={() => { setProjet(projet); setShow(true); }}><FeatherIcon icon="tool" /></span>,
+              action : <span></span>,
           });
         
         }
@@ -74,7 +70,7 @@ const TableTranche = React.forwardRef((props, ref) => {
               field: 'qa',
             },
             {
-              label: 'Action',
+              label: 'Projet',
               field: 'action',
             }
           ],
@@ -83,8 +79,6 @@ const TableTranche = React.forwardRef((props, ref) => {
 
         setLoading(false);
   }
-
-
   
   React.useEffect(() => {
     fetchProjets();
@@ -117,8 +111,7 @@ const TableTranche = React.forwardRef((props, ref) => {
             searchBottom
             barReverse />
         }
-
-      
+       
       </div>
     )
 });

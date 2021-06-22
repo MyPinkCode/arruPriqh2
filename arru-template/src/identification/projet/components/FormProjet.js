@@ -21,8 +21,8 @@ export default function FormProjet() {
 		<div className='step-progress'>
         	<StepZilla 
 				steps={steps}
-				nextButtonCls="btn btn-primary btn-lg pull-right"
-				backButtonCls="btn btn-primary btn-lg pull-left"
+				nextButtonCls="btn btn-primary pull-right"
+				backButtonCls="btn btn-primary pull-left"
 				stepsNavigation={false}
 			/>
     	</div>

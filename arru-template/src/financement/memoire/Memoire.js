@@ -37,7 +37,7 @@ export default function Prestataire() {
 													<div className="col-12 col-xl-12">
 														<div className="card">
 															<div className="modal-header">
-																<h5 className="modal-title">Ajouter une Prestataire</h5>
+																<h5 className="modal-title">Ajouter Memoire</h5>
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">
@@ -57,7 +57,7 @@ export default function Prestataire() {
 													<div className="col-12 col-xl-12">
 														<div className="card">
 															<div className="modal-header">
-																<h5 className="modal-title">Modifier la Prestataire</h5>
+																<h5 className="modal-title">Modifier Memoire</h5>
 																<button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
 															</div>
 															<div className="card-body">
