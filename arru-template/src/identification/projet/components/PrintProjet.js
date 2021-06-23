@@ -1,6 +1,7 @@
 import React from "react";
 import ReactToPrint from 'react-to-print-advanced';
 import ComponentToPrint from './TableProj';
+import DataTable from './DataTable';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -97,7 +98,7 @@ export default function PrintProjet() {
 							role="status"
 							aria-hidden="true"
 						/> </Col></div>: ''}
-            <ComponentToPrint setLoading={setLoading} loading={loading} ref={componentRef}/>
+            <DataTable />
           
         </div>
       );

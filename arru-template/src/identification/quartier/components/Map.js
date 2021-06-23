@@ -6,12 +6,16 @@ import FeatherIcon from 'feather-icons-react';
 import "./map.css";
 import MapFormUpdate from './MapFormUpdate';
 import { Spinner } from 'react-bootstrap'
-import * as turf from '@turf/turf'
+
+import { OpenStreetMapProvider } from "react-leaflet-geosearch";
+import SearchControl from "./SearchControl";
 
 const {BaseLayer} = LayersControl;
 
 export default function Map({ quartiers, loading, setLoading }) {
-  
+
+  const prov = OpenStreetMapProvider();
+
   const [show, setShow] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false);
   const [quartier, setQuartier] = React.useState({});
@@ -46,7 +50,6 @@ export default function Map({ quartiers, loading, setLoading }) {
     return polys;
   }
 
-
   return (
     <Container>
       {
@@ -77,6 +80,19 @@ export default function Map({ quartiers, loading, setLoading }) {
           </BaseLayer>
         </LayersControl>
         <ZoomControl position="bottomleft" zoomInText="+" zoomOutText="-" />
+
+        <SearchControl
+          provider={prov}
+          showMarker={false}
+          showPopup={false}
+          popupFormat={({ query='tunis', result }) => result.label}
+          maxMarkers={3}
+          retainZoomLevel={false}
+          animateZoom={true}
+          autoClose={false}
+          searchLabel={"Enter address, please"}
+          keepResult={true}
+        />
     
         {
         quartiers.map((quartier, index) => (

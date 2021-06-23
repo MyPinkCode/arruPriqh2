@@ -72,6 +72,10 @@ export default function Quartiers() {
     console.log("gouvernoratsINFO",gouvernoratsINFO);
 
     const handlesChangeGouvernorat = (e) => {
+
+        //document.getElementsByClassName('glass')[0].value = e.label
+        console.log("fgdfgdfg",document.getElementsByClassName('geosearch leaflet-bar leaflet-control leaflet-control-geosearch leaflet-geosearch-button')[0].onclick = true);
+
         setLoading(true);
         console.log(e);
         let communes_options = [];

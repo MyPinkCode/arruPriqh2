@@ -395,6 +395,7 @@ const TableProj = React.forwardRef((props, ref) => {
         <ToastContainer />
         {
         !props.loading ?
+       
         <MDBDataTableV5
         ref={ref}
         style={{"marginLeft":"1%"}}
@@ -406,7 +407,8 @@ const TableProj = React.forwardRef((props, ref) => {
         data={datatable}
         paging
         searchBottom
-        barReverse /> : ''
+        barReverse /> 
+        : ''
         }
 
         <Modal show={show} onHide={() => setShow(false)}>
