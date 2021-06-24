@@ -67,23 +67,17 @@ export default function PrintProjet() {
 						<Col>
          
             </Col>
-						<Col md="auto">
-              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
-								<FeatherIcon icon="plus"/>
-							</Button>
-            </Col>
             <Col md="auto">
               <Button  className="btn btn-primary" size="primary" onClick={() => test_eligible()}>
                 <FeatherIcon icon="filter"/>
 							</Button>
             </Col>
 						<Col md="auto">
-            <ReactToPrint
-                trigger={() => <button className="btn btn-primary mr-5" size="primary"><FeatherIcon icon="printer" /></button>}
-                content={() => componentRef.current}
-                style={pageStyle}
-              />
-						</Col>
+              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
+								<FeatherIcon icon="plus"/>
+							</Button>
+            </Col>
+            
 					</Row>
         
           {
@@ -98,7 +92,7 @@ export default function PrintProjet() {
 							role="status"
 							aria-hidden="true"
 						/> </Col></div>: ''}
-            <DataTable />
+            <DataTable setLoading={setLoading} />
           
         </div>
       );

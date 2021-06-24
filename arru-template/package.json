@@ -10,6 +10,8 @@
     "@o2xp/react-datatable": "^1.1.66",
     "@react-leaflet/core": ">=1.0.0 <1.1.0 || ^1.1.1",
     "@svg-maps/tunisia": "^1.0.0",
+    "@syncfusion/ej2-react-grids": "^19.1.69",
+    "@syncfusion/ej2-react-navigations": "^19.1.69",
     "@testing-library/jest-dom": "5.11.9",
     "@testing-library/react": "11.2.5",
     "@testing-library/user-event": "12.7.1",
