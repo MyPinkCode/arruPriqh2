@@ -79,19 +79,26 @@ export default function Projets() {
 			<LoadingBar color='#1a2e8a' height='4px' progress={progress}  />
 				<div className="container-fluid p-0">
 
-					<h1 className="h3 mb-3">Gestion des projets</h1>
+					<Row>
+						<Col>
+							<h1 className="h3 mb-3">Gestion des projets</h1>
+						</Col>
+						<Col>
+							<button className="btn btn-primary float-right" data-toggle="modal" data-target="#ajout" size="primary"><FeatherIcon icon="plus" /></button>
+						</Col>
+					</Row>
 
 					<div className="row">
 					
 						<div className="col-12">
 							<div className="card">
-								<Print />
+								<Print show={show} setShow={setShow} />
 							</div>
 						</div>
 
 					</div>
 
-					<div className="modal fade" id="defaultModalPrimary" tabIndex="-1" role="dialog" aria-hidden="true">
+					<div className="modal fade" id="ajout" tabIndex="-1" role="dialog" aria-hidden="true">
 										<div className="modal-dialog" role="document">
 											<div className="modal-content">
 												<div className="modal-header">

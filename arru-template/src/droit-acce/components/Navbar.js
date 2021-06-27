@@ -2,11 +2,26 @@ import React from 'react'
 import { useAuthState } from '../../context/auth';
 import { useAuthDispatch } from '../../context/auth';
 import FeatherIcon from 'feather-icons-react';
+import {ToastContainer as TContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { gql, useSubscription } from '@apollo/client'
 
+const NOTIFICATIONS = gql`
+subscription notifications {
+  notifications{
+    message
+    type
+    interface{titre}
+  }
+}`
 export default function Navbar(props) {
-    const { user } = useAuthState();
 
-    console.log(user);
+    const { data: notificationsRL, error: messageError } = useSubscription(
+		NOTIFICATIONS
+	)
+
+    const { user } = useAuthState();
     
     const dispatch = useAuthDispatch();
 
@@ -15,8 +30,73 @@ export default function Navbar(props) {
         window.location.href = '/login';
     }
 
+
+    const [notifications, setNotifications] = React.useState([]);
+
+    const fetchNotifications = async () => {
+		try {
+			const url ='http://localhost:4000/api/v1/notifications/';
+			const res = await axios({
+				headers: {'Authorization': `Bearer ${localStorage.getItem('tokenARRU')}`},
+			  	method: 'get',
+			  	url,
+			});
+
+			
+                let interfaces = [];
+                for(const i of user.payload.interfaces){
+                    interfaces.push(i.titre);
+                }
+                console.log(interfaces);
+                let notifs = [];
+                for(const n of res.data.notifications){
+                    if(interfaces.indexOf(n.interface.titre) > -1){
+                        notifs.push(n);
+                    }
+                }
+				setNotifications(notifs);
+                console.log(notifications);
+
+			} catch (err) {
+				console.log(err);
+			}
+	}
+
+    React.useEffect(() => {
+        console.log("fdgdfgdfg",notificationsRL);
+        if(notificationsRL){
+        
+        let interfaces = [];
+        for(const i of user.payload.interfaces){
+            interfaces.push(i.titre);
+        }
+        
+            let notifs = [];
+            for(const n of notificationsRL.notifications){
+                if(interfaces.indexOf(n.interface.titre) > -1){
+                    notifs.push(n);
+                }
+            }
+            
+            notifs.slice(0,notifs.length-notifications.length).forEach((notif) => {
+                toast.success(notif.message, {
+                    position: 'top-right',
+                    autoClose: 3000,
+                    draggable: false
+                });
+            });
+            setNotifications(notificationsRL.notifications);
+        }
+    },[notificationsRL]);
+
+    React.useEffect(() => {
+        fetchNotifications();
+    },[]);
+
     if(user){
     return (
+        <>
+        <TContainer/>
         <nav className="navbar navbar-expand navbar-light navbar-bg">
             <a className="sidebar-toggle d-flex">
                 <i className="hamburger align-self-center"></i>
@@ -29,63 +109,28 @@ export default function Navbar(props) {
                         <a className="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-toggle="dropdown">
                             <div className="position-relative">
                                 <FeatherIcon icon="bell" />
-                                <span className="indicator">4</span>
+                                <span className="indicator">{notifications.length}</span>
                             </div>
                         </a>
-                        <div className="dropdown-menu dropdown-menu-lg dropdown-menu-left py-0" aria-labelledby="alertsDropdown">
+                        <div className="dropdown-menu dropdown-menu-sm dropdown-menu-left py-0" aria-labelledby="alertsDropdown">
                             <div className="dropdown-menu-header">
-                                4 New Notifications
+                                {notifications.length} Notifications
                             </div>
                             <div className="list-group">
-                                <a href="#" className="list-group-item">
-                                    <div className="row g-0 align-items-center">
-                                        <div className="col-2">
-                                            <FeatherIcon className="text-danger" icon="alert-circle" />
+                                {
+                                    notifications.map((notification, index) => (
+                                        <a key={index} href="#" className="list-group-item">
+                                        <div className="row g-0 align-items-center">
+                                            <div className="col-10">
+                                                <div className="text-muted small mt-1">{notification.message}</div>
+                                                <div className="text-muted small mt-1">{new Date(notification.updatedAt).toLocaleString()}</div>
+                                            </div>
                                         </div>
-                                        <div className="col-10">
-                                            <div className="text-dark">Update completed</div>
-                                            <div className="text-muted small mt-1">Restart server 12 to complete the update.</div>
-                                            <div className="text-muted small mt-1">30m ago</div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" className="list-group-item">
-                                    <div className="row g-0 align-items-center">
-                                        <div className="col-2">
-                                            <FeatherIcon className="text-warning" icon="bell" />
-                                            
-                                        </div>
-                                        <div className="col-10">
-                                            <div className="text-dark">Lorem ipsum</div>
-                                            <div className="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>
-                                            <div className="text-muted small mt-1">2h ago</div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" className="list-group-item">
-                                    <div className="row g-0 align-items-center">
-                                        <div className="col-2">
-                                            <FeatherIcon className="text-primary" icon="home" />
-                                            
-                                        </div>
-                                        <div className="col-10">
-                                            <div className="text-dark">Login from 192.186.1.8</div>
-                                            <div className="text-muted small mt-1">5h ago</div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" className="list-group-item">
-                                    <div className="row g-0 align-items-center">
-                                        <div className="col-2">
-                                            <FeatherIcon className="text-success" icon="user-plus" />
-                                        </div>
-                                        <div className="col-10">
-                                            <div className="text-dark">New connection</div>
-                                            <div className="text-muted small mt-1">Christina accepted your request.</div>
-                                            <div className="text-muted small mt-1">14h ago</div>
-                                        </div>
-                                    </div>
-                                </a>
+                                        </a>
+                                    ))
+                                }
+                               
+                              
                             </div>
                             <div className="dropdown-menu-footer">
                                 <a href="#" className="text-muted">Show all notifications</a>
@@ -117,7 +162,7 @@ export default function Navbar(props) {
                     </li>
                 </ul>
             </div>
-        </nav>
+        </nav></>
     ) } else {
         return (
             <React.Fragment></React.Fragment>

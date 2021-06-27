@@ -20,6 +20,8 @@
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-layouts/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-lists/styles/material.css";
 
 :root {
     --bs-blue: #a7c6ed;
@@ -13267,3 +13269,7 @@ span.flatpickr-weekday {
     background: #e6e6e6;
     color: #000;
 }
+
+.e-grid .e-pager .e-currentitem, .e-pager .e-currentitem:hover{ 
+    background-color: #4285F4; 
+ } 

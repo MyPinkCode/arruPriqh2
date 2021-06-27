@@ -27,7 +27,7 @@ import Prestataire from './financement/prestataire/Prestataire'
 import Memoire from './financement/memoire/Memoire'
 import Financement from './financement/financement/Financement'
 import Decompte from './financement/decompte/Decompte'
-import Avancement from './execution physique/tranche/Avancement'
+import Avancement from './execution physique/dashboard/Avancement'
 
 import Avenant from './execution physique/avenant/Avenant'
 

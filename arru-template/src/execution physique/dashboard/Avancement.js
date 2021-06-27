@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Row, Col, Button } from 'react-bootstrap';
 import FeatherIcon from 'feather-icons-react';
+import Index from './components/index';
 
 export default function Avancements() {
 
@@ -38,6 +39,7 @@ export default function Avancements() {
                 </Col>
             </Row>
             
+            <Index />
            
         </div>
             

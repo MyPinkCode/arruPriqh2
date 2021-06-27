@@ -1,7 +1,7 @@
 import React from "react";
 import ReactToPrint from 'react-to-print-advanced';
 import ComponentToPrint from './TableProj';
-import DataTable from './DataTable';
+import DataTable1 from './DataTable1';
 import FeatherIcon from 'feather-icons-react';
 import { Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -27,7 +27,7 @@ const pageStyle = `
   }
 `;
 
-export default function PrintProjet() {
+export default function PrintProjet(props) {
 
       const componentRef = React.useRef();
       const [loading, setLoading] = React.useState(true);
@@ -72,11 +72,6 @@ export default function PrintProjet() {
                 <FeatherIcon icon="filter"/>
 							</Button>
             </Col>
-						<Col md="auto">
-              <Button  className="btn btn-primary" size="primary" data-toggle="modal" data-target="#defaultModalPrimary">
-								<FeatherIcon icon="plus"/>
-							</Button>
-            </Col>
             
 					</Row>
         
@@ -92,7 +87,7 @@ export default function PrintProjet() {
 							role="status"
 							aria-hidden="true"
 						/> </Col></div>: ''}
-            <DataTable setLoading={setLoading} />
+            <DataTable1 loading={loading} setLoading={setLoading} setShow={props.setShow}/>
           
         </div>
       );
