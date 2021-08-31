@@ -92,8 +92,7 @@ const TableProj = React.forwardRef((props, ref) => {
 			  url,
 			});
 
-		
-				
+        console.log("fdgdfgdfg",res);
 
         let projets = [];
         for(const projet of res.data.projets){
@@ -116,7 +115,7 @@ const TableProj = React.forwardRef((props, ref) => {
               Surface: projet.surface_urbanisee_totale,
               logement: projet.nombre_logements_totale,
               habitant: projet.nombre_habitants_totale,
-              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantite,
+              qd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].quantite ,
               cd: projet.infrastructures.filter((infra)=> infra.type === "drainage des eaux pluviales")[0].cout,
               qv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].quantite,
               cv: projet.infrastructures.filter((infra)=> infra.type === "voirie")[0].cout,
@@ -244,6 +243,7 @@ const TableProj = React.forwardRef((props, ref) => {
 
 
   React.useEffect(() => {
+    console.log(projets);
     if(projets){
     let projetsDATA = [];
     for(const projet of projets.projets){

@@ -47,7 +47,7 @@ export default function FormCommuneUpdate() {
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nom en francais</label>
                 <div className="col-sm-9">
-					<input type="text" className="form-control" placeholder="Nombre quartiers" defaultValue={commune ? commune.nom_fr: ''}
+					<input type="text" className="form-control" placeholder="Nom en francais" defaultValue={commune ? commune.nom_fr: ''}
 					onChange={(e) => setCommuneEdit({...commune, nom_fr: e.target.value})}/>
 				</div>
 			</div>
@@ -60,7 +60,6 @@ export default function FormCommuneUpdate() {
 				</div>
 			</div>
 
-			
 			<div className="mb-3 row">
 				<div className="col-sm-9">
 					<span  className="btn btn-primary" onClick={() => updateCommune()}>Submit</span>

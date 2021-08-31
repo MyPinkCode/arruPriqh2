@@ -16,39 +16,6 @@ if(!gouvernorat){
     gouvernorat = 'Bizerte';
 }
 
-const loadValues = () => {
-    const drainage = {
-        type: "Drainage", 
-        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].quantite : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Drainage")[0].cout : ''}
-    
-    const eau = {
-        type: "Eau potable",
-        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].quantite : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eau potable")[0].cout : ''}
-
-    const assainissement = {
-        type: "Assainissement",
-        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].quantite : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Assainissement")[0].cout : ''
-    }
-
-    const eclairage = {
-        type: "Eclairage public",
-        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].quantite : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Eclairage public")[0].cout : ''}
-    
-    const voirie = {
-        type: "Voirie",
-        quantite: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].quantite : '',
-        cout: projet ? projet.infrastructures.filter((infra) => infra.type === "Voirie")[0].cout : ''}
-    
-    const etude = {
-        bureau: projet && projet.etude ? projet.etude.bureau : '',
-        cout: projet && projet.etude ? projet.etude.cout : ''}
-
-    return {drainage,eau,assainissement,eclairage,voirie,etude};
-}
 
 const storeReducer = (state, action) => {
     switch(action.type) {

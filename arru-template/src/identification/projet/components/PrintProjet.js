@@ -87,7 +87,7 @@ export default function PrintProjet(props) {
 							role="status"
 							aria-hidden="true"
 						/> </Col></div>: ''}
-            <DataTable1 loading={loading} setLoading={setLoading} setShow={props.setShow}/>
+            <ComponentToPrint loading={loading} setLoading={setLoading} setShow={props.setShow}/>
           
         </div>
       );

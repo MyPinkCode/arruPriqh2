@@ -20,7 +20,6 @@ export default function Traces() {
 		fetchTraces();
 	},[]);
 
-
     const { data: traces, error: messageError } = useSubscription(
 		TRACES
 	)

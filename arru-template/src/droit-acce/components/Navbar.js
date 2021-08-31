@@ -41,13 +41,12 @@ export default function Navbar(props) {
 			  	method: 'get',
 			  	url,
 			});
-
 			
                 let interfaces = [];
                 for(const i of user.payload.interfaces){
                     interfaces.push(i.titre);
                 }
-                console.log(interfaces);
+ 
                 let notifs = [];
                 for(const n of res.data.notifications){
                     if(interfaces.indexOf(n.interface.titre) > -1){
@@ -55,7 +54,7 @@ export default function Navbar(props) {
                     }
                 }
 				setNotifications(notifs);
-                console.log(notifications);
+                
 
 			} catch (err) {
 				console.log(err);
@@ -63,7 +62,7 @@ export default function Navbar(props) {
 	}
 
     React.useEffect(() => {
-        console.log("fdgdfgdfg",notificationsRL);
+     
         if(notificationsRL){
         
         let interfaces = [];

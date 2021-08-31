@@ -83,9 +83,9 @@ const TraceTable = React.forwardRef((props, ref) => {
         let tracesData = [];
         for(const trace of res.data.traces){
             tracesData.push({
-                cin: trace.utilisateur.cin,
-                nom: trace.utilisateur.nom,
-                prenom: trace.utilisateur.prenom,
+                cin: trace.utilisateur ? trace.utilisateur.cin : null,
+                nom: trace.utilisateur ? trace.utilisateur.nom : null,
+                prenom: trace.utilisateur ? trace.utilisateur.prenom : null,
                 action: trace.action,
                 date: new Date(trace.createdAt).toLocaleString()
             });
@@ -121,7 +121,7 @@ const TraceTable = React.forwardRef((props, ref) => {
         setLoading(false);
 
 		} catch (err) {
-			console.log(err.response.data.message);
+			console.log(err);
 		}
   }
 

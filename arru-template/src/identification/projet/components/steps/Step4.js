@@ -11,8 +11,10 @@ export default function Step4() {
 	console.log(newProjet);
     const [etude, setEtude] = React.useState({ bureau_etude: '', cout_etude: 0 });
 	const dispatch = useStoreDispatch();
+
+	console.log(newProjet);
+
     const AddProjet = async() => {
-	
 		
 		try{
 			const url ='http://localhost:4000/api/v1/projets/';

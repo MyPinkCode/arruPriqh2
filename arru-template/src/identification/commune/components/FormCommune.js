@@ -82,7 +82,7 @@ export default function FormCommune() {
 			<div className="mb-3 row">
                 <label className="col-form-label col-sm-3 text-sm-left">Nom en francais</label>
                 <div className="col-sm-9">
-					<input type="text" className="form-control" placeholder="Nombre quartiers"
+					<input type="text" className="form-control" placeholder="Nom en francais"
 					onChange={(e) => setCommune({...commune, nom_fr: e.target.value})}/>
 				</div>
 			</div>

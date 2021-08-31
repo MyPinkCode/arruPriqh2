@@ -8,7 +8,7 @@ export default function Sidebar(props) {
 	
 	const [selectedItem, setSelectedItem]=React.useState(window.location.href.slice(22,window.location.href.length));
 
-	console.log(user);
+	
 	if(user !== null && user !== undefined){
     return (
         <nav id="sidebar" className="sidebar">
